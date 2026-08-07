@@ -1,0 +1,43 @@
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Booking {
+  id        String   @id @default(uuid())
+  name      String
+  phone     String
+  email     String
+  service   String
+  style     String
+  placement String
+  size      String
+  date      String
+  time      String
+  notes     String?
+  status    String   @default("Pending") // Pending, Contacted, Booked, Archived
+  createdAt DateTime @default(now())
+}
+
+model Inquiry {
+  id        String   @id @default(uuid())
+  name      String
+  phone     String
+  email     String
+  message   String
+  status    String   @default("Pending") // Pending, Contacted, Archived
+  createdAt DateTime @default(now())
+}
+
+model WhatsappLog {
+  id        String   @id @default(uuid())
+  recipient String
+  message   String
+  status    String   @default("Sent") // Sent, Failed
+  error     String?
+  createdAt DateTime @default(now())
+}
