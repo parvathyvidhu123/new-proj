@@ -26,7 +26,6 @@ export default function Navbar() {
   }, []);
 
   const menuItems = [
-    { label: "Home", href: "#home" },
     { label: "Gallery", href: "#gallery" },
     { label: "Services", href: "#services" },
     { label: "Why BLACKHOLE", href: "#why-us" },
