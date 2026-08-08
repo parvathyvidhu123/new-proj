@@ -73,12 +73,10 @@ export default function Testimonials() {
         
         {/* Header */}
         <div className="text-center mb-16 md:mb-24">
-          <div className="text-xs font-bold tracking-[0.4em] text-red-500 uppercase mb-4">
-            05 // CLIENT CHRONICLES
-          </div>
+          
           <h2 className="font-display text-4xl md:text-5xl font-black uppercase tracking-tight">
             TESTIMONIALS OF <br />
-            <span className="font-serif italic font-light text-red-500 tracking-wide">TRUST & EXCELLENCE</span>
+            <span className="font-serif italic font-light text-gold-accent tracking-wide">TRUST & EXCELLENCE</span>
           </h2>
         </div>
 
@@ -97,7 +95,7 @@ export default function Testimonials() {
               {/* Star Rating */}
               <div className="flex items-center gap-1.5 mb-8">
                 {Array.from({ length: testimonials[activeIndex].rating }).map((_, i) => (
-                  <Star key={i} size={16} className="fill-yellow-500 text-yellow-500 animate-pulse-slow" />
+                  <Star key={i} size={16} className="fill-gold-accent text-gold-accent animate-pulse-slow" />
                 ))}
               </div>
 
@@ -122,7 +120,7 @@ export default function Testimonials() {
               <div className="flex items-center gap-3">
                 <button
                   onClick={prevSlide}
-                  className="p-2.5 rounded-full border border-zinc-200 dark:border-zinc-800 hover:border-amber-500 bg-white dark:bg-zinc-950 hover:bg-amber-500 dark:hover:bg-amber-500 hover:text-white dark:hover:text-white text-zinc-600 dark:text-zinc-400 transition-all duration-300 cursor-pointer"
+                  className="p-2.5 rounded-full border border-zinc-200 dark:border-zinc-800 hover:border-red-600 bg-white dark:bg-zinc-950 hover:bg-red-600 dark:hover:bg-red-600 hover:text-white dark:hover:text-white text-zinc-600 dark:text-zinc-400 transition-all duration-300 cursor-pointer"
                   aria-label="Previous Slide"
                   data-cursor-text="Prev"
                 >
@@ -130,7 +128,7 @@ export default function Testimonials() {
                 </button>
                 <button
                   onClick={nextSlide}
-                  className="p-2.5 rounded-full border border-zinc-200 dark:border-zinc-800 hover:border-amber-500 bg-white dark:bg-zinc-950 hover:bg-amber-500 dark:hover:bg-amber-500 hover:text-white dark:hover:text-white text-zinc-600 dark:text-zinc-400 transition-all duration-300 cursor-pointer"
+                  className="p-2.5 rounded-full border border-zinc-200 dark:border-zinc-800 hover:border-red-600 bg-white dark:bg-zinc-950 hover:bg-red-600 dark:hover:bg-red-600 hover:text-white dark:hover:text-white text-zinc-600 dark:text-zinc-400 transition-all duration-300 cursor-pointer"
                   aria-label="Next Slide"
                   data-cursor-text="Next"
                 >
@@ -148,7 +146,7 @@ export default function Testimonials() {
                 key={index}
                 onClick={() => setActiveIndex(index)}
                 className={`h-1.5 rounded-full transition-all duration-500 cursor-pointer ${
-                  activeIndex === index ? "w-8 bg-amber-500" : "w-1.5 bg-zinc-300 dark:bg-zinc-800 hover:bg-zinc-400 dark:hover:bg-zinc-600"
+                  activeIndex === index ? "w-8 bg-red-600" : "w-1.5 bg-zinc-300 dark:bg-zinc-800 hover:bg-zinc-400 dark:hover:bg-zinc-600"
                 }`}
                 aria-label={`Go to slide ${index + 1}`}
               />

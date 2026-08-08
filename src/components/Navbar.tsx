@@ -84,7 +84,7 @@ export default function Navbar() {
                 className="object-contain drop-shadow-[0_0_8px_rgba(234,179,8,0.45)]"
               />
             </div>
-            <span className="font-sans text-lg font-black tracking-[0.25em] text-zinc-100 dark:text-zinc-100 group-hover:text-red-500 transition-colors duration-300">
+            <span className="font-sans text-lg font-black tracking-[0.25em] text-zinc-100 dark:text-zinc-100 group-hover:text-gold-accent transition-colors duration-300">
               BLACKHOLE
             </span>
           </a>
@@ -100,7 +100,7 @@ export default function Navbar() {
               >
                 {item.label}
                 {/* Animated underline */}
-                <span className="absolute bottom-0 left-0 w-full h-[1px] bg-red-600 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
+                <span className="absolute bottom-0 left-0 w-full h-[1px] bg-gold-accent scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
               </a>
             ))}
           </nav>
@@ -111,7 +111,7 @@ export default function Navbar() {
             {/* Theme Toggle */}
             <button
               onClick={toggleTheme}
-              className="text-zinc-400 hover:text-yellow-500 transition-colors duration-300 cursor-pointer"
+              className="text-zinc-400 hover:text-gold-accent transition-colors duration-300 cursor-pointer"
               aria-label="Toggle Theme"
               data-cursor-text={theme === "dark" ? "Light" : "Dark"}
             >
@@ -122,11 +122,11 @@ export default function Navbar() {
             <a
               href="#booking"
               onClick={(e) => handleScrollTo(e, "#booking")}
-              className="relative px-6 py-2.5 text-[11px] font-bold tracking-widest text-white uppercase border border-amber-800 rounded-full bg-amber-950/20 hover:bg-amber-600 transition-all duration-500 overflow-hidden group"
+              className="relative px-6 py-2.5 text-[11px] font-bold tracking-widest text-white uppercase border border-red-800/50 rounded-full bg-red-950/20 hover:text-white transition-all duration-500 overflow-hidden group"
               data-cursor-text="Book"
             >
               <span className="relative z-10">Book Consultation</span>
-              <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-amber-600 to-amber-500 opacity-0 group-hover:opacity-100 transition-opacity duration-500 -z-0" />
+              <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-red-700 to-red-600 opacity-0 group-hover:opacity-100 transition-opacity duration-500 -z-0" />
             </a>
           </div>
 
@@ -164,7 +164,7 @@ export default function Navbar() {
               key={item.label}
               href={item.href}
               onClick={(e) => handleScrollTo(e, item.href)}
-              className="font-sans text-3xl font-black tracking-wider text-zinc-100 hover:text-red-500 uppercase transition-colors duration-300"
+              className="font-sans text-3xl font-black tracking-wider text-zinc-100 hover:text-gold-accent uppercase transition-colors duration-300"
               style={{
                 transitionDelay: `${index * 50}ms`,
                 transform: mobileMenuOpen ? "translateY(0)" : "translateY(20px)",
@@ -190,7 +190,7 @@ export default function Navbar() {
           <a
             href="#booking"
             onClick={(e) => handleScrollTo(e, "#booking")}
-            className="w-full text-center py-4 text-xs font-black tracking-widest bg-amber-500 hover:bg-amber-600 text-white rounded-full uppercase transition-all duration-300 shadow-[0_4px_20px_rgba(245,158,11,0.3)]"
+            className="w-full text-center py-4 text-xs font-black tracking-widest bg-red-600 text-white rounded-full uppercase transition-all duration-300 shadow-[0_4px_20px_rgba(191,10,10,0.3)] hover:bg-red-700"
           >
             Book Consultation
           </a>

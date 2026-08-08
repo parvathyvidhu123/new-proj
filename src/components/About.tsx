@@ -53,7 +53,7 @@ export default function About() {
   }, []);
 
   // Animate stats
-  const years = useCounter(8, 2000, inView);
+  const years = useCounter(10, 2000, inView);
   const clients = useCounter(5000, 2500, inView);
   const designs = useCounter(3500, 2500, inView);
   const rating = useCounter(49, 1500, inView); // will represent 4.9⭐
@@ -100,14 +100,11 @@ export default function About() {
             inView ? "translate-x-0 opacity-100" : "translate-x-12 opacity-0"
           }`}
         >
-          {/* Editorial Section Index */}
-          <div className="text-xs font-bold tracking-[0.4em] text-red-500 uppercase mb-4">
-            01 // ESTABLISHED EXCELLENCE
-          </div>
+          
 
           <h2 className="font-display text-4xl md:text-5xl font-black tracking-tight uppercase text-zinc-900 dark:text-zinc-100 mb-8 leading-tight">
             CRAFTING IMMORTAL <br />
-            <span className="font-serif italic font-light text-red-500 tracking-wide">DIGITAL ARTISTRY</span> ON SKIN
+            <span className="font-serif italic font-light text-gold-accent tracking-wide">DIGITAL ARTISTRY</span> ON SKIN
           </h2>
 
           <div className="font-sans text-sm md:text-base text-zinc-650 dark:text-zinc-400 font-light space-y-6 leading-relaxed">
@@ -129,7 +126,7 @@ export default function About() {
             <div className="flex flex-col">
               <span className="font-mono text-4xl md:text-5xl font-light text-zinc-900 dark:text-zinc-100 tracking-tight">
                 {years}
-                <span className="text-red-500 ml-1">+</span>
+                <span className="text-gold-accent ml-1">+</span>
               </span>
               <span className="text-[10px] font-bold tracking-[0.3em] text-zinc-500 uppercase mt-2">
                 Years Experience
@@ -140,7 +137,7 @@ export default function About() {
             <div className="flex flex-col">
               <span className="font-mono text-4xl md:text-5xl font-light text-zinc-900 dark:text-zinc-100 tracking-tight">
                 {clients}
-                <span className="text-red-500 ml-1">+</span>
+                <span className="text-gold-accent ml-1">+</span>
               </span>
               <span className="text-[10px] font-bold tracking-[0.3em] text-zinc-500 uppercase mt-2">
                 Happy Clients
@@ -151,7 +148,7 @@ export default function About() {
             <div className="flex flex-col">
               <span className="font-mono text-4xl md:text-5xl font-light text-zinc-900 dark:text-zinc-100 tracking-tight">
                 {designs}
-                <span className="text-red-500 ml-1">+</span>
+                <span className="text-gold-accent ml-1">+</span>
               </span>
               <span className="text-[10px] font-bold tracking-[0.3em] text-zinc-500 uppercase mt-2">
                 Custom Designs
@@ -162,7 +159,7 @@ export default function About() {
             <div className="flex flex-col">
               <span className="font-mono text-4xl md:text-5xl font-light text-zinc-900 dark:text-zinc-100 tracking-tight">
                 {(rating / 10).toFixed(1)}
-                <span className="text-yellow-500 ml-1 text-3xl">★</span>
+                <span className="text-gold-accent ml-1 text-3xl">★</span>
               </span>
               <span className="text-[10px] font-bold tracking-[0.3em] text-zinc-500 uppercase mt-2">
                 Google Rating

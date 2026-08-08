@@ -25,11 +25,12 @@
   --color-matte-black: #0a0a0a;
   --color-charcoal: #121212;
   --color-graphite: #1a1a1a;
-  --color-crimson: #bf0a0a; /* premium red */
+  --color-crimson: #bf0a0a;
   --color-chrome-silver: #e5e5e5;
   --color-electric-purple: #7c3aed;
   --color-warm-white: #fbfbfa;
   --color-soft-bone: #f4f4f3;
+  --color-gold-accent: #DDB11E;
 }
 
 /* Global resets and smooth transition between dark/light */
@@ -58,11 +59,11 @@ body {
   background: rgba(240, 240, 240, 0.9);
 }
 ::-webkit-scrollbar-thumb {
-  background: #f59e0b;
+  background: #DDB11E;
   border-radius: 10px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #d97706;
+  background: #DDB11E;
 }
 
 /* Luxury Glassmorphism Utilities */
@@ -141,8 +142,8 @@ body {
 
 /* Selection */
 ::selection {
-  background: #f59e0b;
-  color: #0a0a0a;
+  background: #DDB11E;
+  color: #000000;
 }
 
 /* Slow Pulse and Spin Animations */

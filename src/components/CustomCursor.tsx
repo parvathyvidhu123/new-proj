@@ -108,7 +108,7 @@ export default function CustomCursor() {
       {/* Inner Dot */}
       <div
         ref={dotRef}
-        className={`fixed top-0 left-0 w-2 h-2 -ml-1 -mt-1 bg-red-600 dark:bg-red-500 rounded-full pointer-events-none z-[9999] transition-opacity duration-300 ${
+        className={`fixed top-0 left-0 w-2 h-2 -ml-1 -mt-1 bg-gold-accent dark:bg-red-500 rounded-full pointer-events-none z-[9999] transition-opacity duration-300 ${
           hidden ? "opacity-0" : "opacity-100"
         } ${clicked ? "scale-75" : "scale-100"}`}
         style={{ willChange: "transform" }}
@@ -118,13 +118,13 @@ export default function CustomCursor() {
         ref={ringRef}
         className={`fixed top-0 left-0 w-8 h-8 -ml-4 -mt-4 border border-zinc-500/40 dark:border-zinc-400/30 rounded-full pointer-events-none z-[9998] flex items-center justify-center transition-all duration-250 ease-out ${
           hidden ? "opacity-0 scale-50" : "opacity-100 scale-100"
-        } ${clicked ? "scale-50 bg-red-600/10 border-red-600/30 dark:bg-red-500/10 dark:border-red-500/30" : ""} ${
-          hovered ? "w-16 h-16 -ml-8 -mt-8 bg-zinc-950/5 dark:bg-zinc-50/5 border-red-600 dark:border-red-500 scale-110" : ""
+        } ${clicked ? "scale-50 bg-gold-accent/10 border-red-600/30 dark:bg-red-500/10 dark:border-gold-accent/30" : ""} ${
+          hovered ? "w-16 h-16 -ml-8 -mt-8 bg-zinc-950/5 dark:bg-zinc-50/5 border-red-600 dark:border-gold-accent scale-110" : ""
         }`}
         style={{ willChange: "transform" }}
       >
         {cursorText && (
-          <span className="text-[9px] uppercase font-bold tracking-widest text-red-600 dark:text-red-500 select-none animate-fade-in text-center px-1">
+          <span className="text-[9px] uppercase font-bold tracking-widest text-red-600 dark:text-gold-accent select-none animate-fade-in text-center px-1">
             {cursorText}
           </span>
         )}

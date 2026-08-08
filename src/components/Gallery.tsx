@@ -178,12 +178,12 @@ export default function Gallery() {
         {/* Section Title */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-16">
           <div>
-            <div className="text-xs font-bold tracking-[0.4em] text-red-500 uppercase mb-4">
+            <div className="text-xs font-bold tracking-[0.4em] text-gold-accent uppercase mb-4">
               03 // GALLERY EXHIBITION
             </div>
             <h2 className="font-display text-4xl md:text-6xl font-black uppercase tracking-tight leading-none">
               THE PORTFOLIO <br />
-              <span className="font-serif italic font-light text-red-500 tracking-wide">OF PERMANENT</span> COLLECTIVES
+              <span className="font-serif italic font-light text-gold-accent tracking-wide">OF PERMANENT</span> COLLECTIVES
             </h2>
           </div>
 
@@ -195,7 +195,7 @@ export default function Gallery() {
                 onClick={() => setActiveTab(tab.key as any)}
                 className={`px-5 py-2.5 text-[10px] md:text-xs font-bold tracking-widest uppercase rounded-full border transition-all duration-500 cursor-pointer whitespace-nowrap ${
                   activeTab === tab.key
-                    ? "bg-amber-500 border-amber-500 text-white shadow-[0_4px_20px_rgba(245,158,11,0.25)]"
+                    ? "bg-gold-accent border-gold-accent text-white shadow-[0_4px_20px_rgba(245,158,11,0.25)]"
                     : "border-zinc-800 text-zinc-400 hover:text-white hover:border-zinc-500"
                 }`}
               >
@@ -245,7 +245,7 @@ export default function Gallery() {
                   </div>
                   
                   {/* Floating Action Circle */}
-                  <div className="p-2.5 rounded-full bg-amber-500 text-white flex items-center justify-center shadow-md scale-75 group-hover:scale-100 transition-transform duration-500">
+                  <div className="p-2.5 rounded-full bg-red-600 text-white flex items-center justify-center shadow-md scale-75 group-hover:scale-100 transition-transform duration-500">
                     <ZoomIn size={14} />
                   </div>
                 </div>
@@ -275,7 +275,7 @@ export default function Gallery() {
             
             <button
               onClick={closeLightbox}
-              className="p-3 rounded-full border border-zinc-800 bg-zinc-950/80 hover:bg-amber-500 hover:text-white transition-all duration-300 cursor-pointer"
+              className="p-3 rounded-full border border-zinc-800 bg-zinc-950/80 hover:bg-red-600 hover:text-white transition-all duration-300 cursor-pointer"
               aria-label="Close Lightbox"
             >
               <X size={18} />

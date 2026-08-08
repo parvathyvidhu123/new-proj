@@ -427,7 +427,7 @@ export default function Hero() {
         {/* Cinematic Mini Tag */}
         <div className="mb-4 text-[10px] md:text-xs font-bold tracking-[0.6em] text-red-500 uppercase flex items-center gap-3 hero-fade-up">
           <span className="w-1.5 h-1.5 rounded-full bg-red-600 animate-ping" />
-          ESTD. 2018 • PREMIUM TATTOO COLLECTIVE
+          ESTD. 2016 • PREMIUM TATTOO COLLECTIVE
         </div>
 
         {/* Massive Hero Heading - Using fluid text-size to fit mobile screens */}
@@ -476,7 +476,7 @@ export default function Hero() {
         <div className="mt-12 flex flex-col sm:flex-row items-center gap-5 hero-fade-up">
           <button
             onClick={() => handleScrollTo("#booking")}
-            className="px-8 py-4 text-xs font-bold tracking-widest text-black bg-white dark:bg-white rounded-full uppercase transition-all duration-300 hover:bg-amber-500 hover:text-white hover:scale-105 shadow-[0_4px_30px_rgba(255,255,255,0.08)] cursor-pointer"
+            className="px-8 py-4 text-xs font-bold tracking-widest text-black bg-white dark:bg-white rounded-full uppercase transition-all duration-300 hover:bg-gold-accent hover:text-white hover:scale-105 shadow-[0_4px_30px_rgba(255,255,255,0.08)] cursor-pointer"
             data-cursor-text="Book"
           >
             Book Consultation
@@ -484,7 +484,7 @@ export default function Hero() {
           
           <button
             onClick={() => handleScrollTo("#gallery")}
-            className="px-8 py-4 text-xs font-bold tracking-widest text-white border border-zinc-700 hover:border-amber-500 rounded-full bg-zinc-900/40 hover:bg-zinc-900/80 uppercase transition-all duration-300 hover:scale-105 cursor-pointer"
+            className="px-8 py-4 text-xs font-bold tracking-widest text-white border border-zinc-700 hover:border-gold-accent rounded-full bg-zinc-900/40 hover:bg-zinc-900/80 uppercase transition-all duration-300 hover:scale-105 cursor-pointer"
             data-cursor-text="View"
           >
             Explore Gallery
@@ -492,13 +492,12 @@ export default function Hero() {
         </div>
       </div>
 
-      {/* Quick Action Sidebars (Floating) */}
       <div className="absolute bottom-10 left-10 z-20 hidden md:flex items-center gap-6 text-xs font-bold tracking-[0.3em] text-zinc-500 uppercase hero-fade-in">
         <a 
-          href="https://wa.me/919746695575" 
+          href="https://api.whatsapp.com/send?phone=916235456525" 
           target="_blank" 
           rel="noopener noreferrer"
-          className="hover:text-green-500 flex items-center gap-2 transition-colors duration-300"
+          className="hover:text-gold-accent flex items-center gap-2 transition-colors duration-300"
           data-cursor-text="Chat"
         >
           <MessageCircle size={14} /> WHATSAPP
@@ -508,15 +507,15 @@ export default function Hero() {
           href="https://www.instagram.com/blackholetattoos" 
           target="_blank" 
           rel="noopener noreferrer"
-          className="hover:text-red-500 flex items-center gap-2 transition-colors duration-300"
+          className="hover:text-gold-accent flex items-center gap-2 transition-colors duration-300"
           data-cursor-text="Follow"
         >
           <Instagram size={14} /> INSTAGRAM
         </a>
         <span className="w-1.5 h-1.5 rounded-full bg-zinc-800" />
         <a 
-          href="tel:+919746695575" 
-          className="hover:text-blue-400 flex items-center gap-2 transition-colors duration-300"
+          href="tel:+916235456525" 
+          className="hover:text-gold-accent flex items-center gap-2 transition-colors duration-300"
           data-cursor-text="Call"
         >
           <Phone size={14} /> CALL NOW
@@ -526,7 +525,7 @@ export default function Hero() {
       {/* Scroll Down Indicator */}
       <button
         onClick={() => handleScrollTo("#gallery")}
-        className="absolute bottom-10 z-20 flex flex-col items-center gap-2 text-[10px] font-bold tracking-[0.4em] text-zinc-500 uppercase hover:text-red-500 transition-colors duration-300 cursor-pointer hero-fade-in"
+        className="absolute bottom-10 z-20 flex flex-col items-center gap-2 text-[10px] font-bold tracking-[0.4em] text-zinc-500 uppercase hover:text-gold-accent transition-colors duration-300 cursor-pointer hero-fade-in"
         aria-label="Scroll Down"
         data-cursor-text="Scroll"
       >

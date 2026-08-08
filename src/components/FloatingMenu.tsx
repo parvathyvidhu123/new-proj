@@ -26,7 +26,7 @@ export default function FloatingMenu() {
     {
       icon: <MessageCircle size={18} />,
       label: "WhatsApp",
-      href: "https://wa.me/919746695575",
+      href: "https://api.whatsapp.com/send?phone=916235456525",
       color: "bg-green-600 hover:bg-green-700 text-white shadow-green-900/40",
       cursorText: "Chat",
     },
@@ -34,13 +34,13 @@ export default function FloatingMenu() {
       icon: <Instagram size={18} />,
       label: "Instagram",
       href: "https://www.instagram.com/blackholetattoos",
-      color: "bg-red-600 hover:bg-red-700 text-white shadow-red-900/40",
+      color: "bg-gold-accent hover:bg-gold-accent/90 text-black shadow-amber-950/30",
       cursorText: "Follow",
     },
     {
       icon: <Phone size={18} />,
       label: "Call Now",
-      href: "tel:+919746695575",
+      href: "tel:+916235456525",
       color: "bg-blue-600 hover:bg-blue-700 text-white shadow-blue-900/40",
       cursorText: "Call",
     },
@@ -80,7 +80,7 @@ export default function FloatingMenu() {
         className={`w-14 h-14 rounded-full flex items-center justify-center shadow-2xl transition-all duration-500 cursor-pointer hover:scale-105 active:scale-95 ${
           isOpen
             ? "bg-zinc-800 border border-zinc-700 text-zinc-200 rotate-180 shadow-black/40"
-            : "bg-amber-500 border border-amber-400 text-white hover:bg-amber-600 shadow-amber-950/30 animate-pulse-slow"
+            : "bg-gold-accent border border-amber-400 text-white hover:bg-gold-accent/90 text-black shadow-red-900/30 animate-pulse-slow"
         }`}
         data-cursor-text={isOpen ? "Close" : "Connect"}
         aria-label="Toggle Quick Connect Menu"

@@ -1,8 +1,8 @@
 "use client";
 
-import React, { useState, useRef } from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import { Upload, Calendar, Clock, CheckCircle2, AlertCircle } from "lucide-react";
+import { Calendar, Clock, CheckCircle2, AlertCircle, ChevronDown } from "lucide-react";
 import confetti from "canvas-confetti";
 
 type FormData = {
@@ -20,10 +20,6 @@ type FormData = {
 
 export default function BookingForm() {
   const [submitted, setSubmitted] = useState(false);
-  const [selectedFile, setSelectedFile] = useState<File | null>(null);
-  const [filePreview, setFilePreview] = useState<string | null>(null);
-  const [isDragActive, setIsDragActive] = useState(false);
-  const fileInputRef = useRef<HTMLInputElement>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
 
@@ -44,45 +40,6 @@ export default function BookingForm() {
   });
 
   const selectedService = watch("service");
-
-  // Handle Drag & Drop
-  const handleDrag = (e: React.DragEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
-    if (e.type === "dragenter" || e.type === "dragover") {
-      setIsDragActive(true);
-    } else if (e.type === "dragleave") {
-      setIsDragActive(false);
-    }
-  };
-
-  const handleDrop = (e: React.DragEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
-    setIsDragActive(false);
-
-    if (e.dataTransfer.files && e.dataTransfer.files[0]) {
-      const file = e.dataTransfer.files[0];
-      setSelectedFile(file);
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setFilePreview(reader.result as string);
-      };
-      reader.readAsDataURL(file);
-    }
-  };
-
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files[0]) {
-      const file = e.target.files[0];
-      setSelectedFile(file);
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setFilePreview(reader.result as string);
-      };
-      reader.readAsDataURL(file);
-    }
-  };
 
   const triggerConfetti = () => {
     // Left burst
@@ -107,6 +64,7 @@ export default function BookingForm() {
     setIsSubmitting(true);
     setSubmitError(null);
     try {
+      // 1. Post record to SQLite database via local API
       const response = await fetch("/api/bookings", {
         method: "POST",
         headers: {
@@ -120,11 +78,78 @@ export default function BookingForm() {
         throw new Error(errJson.error || "Failed to submit booking inquiry.");
       }
 
+      // 2. Format and open WhatsApp message matching the friend's configuration
+      const getServiceLabel = (val: string) => {
+        switch (val) {
+          case "tattoo": return "Custom Tattooing";
+          case "piercing": return "Precision Piercing";
+          default: return val;
+        }
+      };
+      const getStyleLabel = (val: string) => {
+        switch (val) {
+          case "fine-line": return "Fine Line / Micro-realism";
+          case "realism": return "Shaded Realism";
+          case "biomech": return "Bio-Mechanical / Heavy Ink";
+          case "traditional": return "Traditional / Neo-Trad";
+          case "tribal": return "Tribal / Blackwork";
+          case "geometry": return "Geometric / Mandala";
+          case "other": return "Other / Custom Concept";
+          default: return val;
+        }
+      };
+      const getPlacementLabel = (val: string) => {
+        switch (val) {
+          case "forearm": return "Forearm";
+          case "upper-arm": return "Upper Arm / Shoulder";
+          case "sleeve": return "Full Arm Sleeve";
+          case "chest-back": return "Chest / Back";
+          case "leg-calf": return "Leg / Calf / Thigh";
+          case "neck-nape": return "Neck / Nape";
+          case "hand-wrist": return "Hand / Wrist";
+          case "other": return "Other";
+          default: return val;
+        }
+      };
+      const getSizeLabel = (val: string) => {
+        switch (val) {
+          case "small": return "Small (under 3 inches)";
+          case "medium": return "Medium (3 - 6 inches)";
+          case "large": return "Large (6 - 10 inches)";
+          case "sleeve-project": return "Multi-session / Large Scale";
+          default: return val;
+        }
+      };
+
+      const serviceLabel = getServiceLabel(data.service);
+      let message = `*BLACKHOLE TATTOO STUDIO - BOOKING REQUEST*\n\n`;
+      message += `👤 *Client:* ${data.name}\n`;
+      message += `📞 *Phone:* ${data.phone}\n`;
+      message += `📧 *Email:* ${data.email}\n`;
+      message += `✨ *Service:* ${serviceLabel}\n`;
+      
+      if (data.service === "tattoo") {
+        message += `🎨 *Style:* ${getStyleLabel(data.style)}\n`;
+        message += `📍 *Placement:* ${getPlacementLabel(data.placement)}\n`;
+        message += `📐 *Size:* ${getSizeLabel(data.size)}\n`;
+      }
+      
+      message += `📅 *Preferred Date:* ${data.date}\n`;
+      message += `⏰ *Preferred Time Slot:* ${data.time}\n`;
+      
+      if (data.notes) {
+        message += `📝 *Project Brief:* ${data.notes}\n`;
+      }
+      
+      const encodedMessage = encodeURIComponent(message);
+      const whatsappUrl = `https://api.whatsapp.com/send?phone=916235456525&text=${encodedMessage}`;
+      
+      window.open(whatsappUrl, "_blank");
+
+      // 3. Trigger success animation and state reset
       setSubmitted(true);
       triggerConfetti();
       reset();
-      setSelectedFile(null);
-      setFilePreview(null);
     } catch (err: any) {
       console.error("Booking error:", err);
       setSubmitError(err.message || "Something went wrong. Please try again.");
@@ -145,12 +170,10 @@ export default function BookingForm() {
         
         {/* Header */}
         <div className="text-center mb-16">
-          <div className="text-xs font-bold tracking-[0.4em] text-red-500 uppercase mb-4">
-            06 // RESERVATIONS & CONSULTATION
-          </div>
+
           <h2 className="font-display text-4xl md:text-5xl font-black uppercase tracking-tight">
             SECURE YOUR <br />
-            <span className="font-serif italic font-light text-red-500 tracking-wide">CREATIVE CONSPIRACY</span>
+            <span className="font-serif italic font-light text-gold-accent tracking-wide">CREATIVE CONSPIRACY</span>
           </h2>
           <p className="mt-4 font-sans text-zinc-600 dark:text-zinc-400 font-light max-w-lg mx-auto">
             Ready to immortalize your vision? Fill out our luxury briefing form. We will match you with the artist best suited for your project.
@@ -163,18 +186,18 @@ export default function BookingForm() {
           {submitted ? (
             /* Elegant Success Animation */
             <div className="flex flex-col items-center justify-center text-center py-12 animate-fade-in">
-              <div className="w-20 h-20 rounded-full bg-red-950/35 border border-red-500/30 flex items-center justify-center text-red-500 mb-8 shadow-[0_0_25px_rgba(202,138,4,0.2)] animate-bounce">
+              <div className="w-20 h-20 rounded-full bg-red-950/35 border border-red-500/30 flex items-center justify-center text-red-500 mb-8 shadow-[0_0_25px_rgba(191,10,10,0.2)] animate-bounce">
                 <CheckCircle2 size={40} />
               </div>
               <h3 className="font-display text-3xl font-black uppercase text-zinc-900 dark:text-zinc-100 tracking-tight mb-4">
                 CONSULTATION SECURED
               </h3>
               <p className="font-sans text-sm font-light text-zinc-600 dark:text-zinc-400 max-w-md leading-relaxed mb-8">
-                Your briefing file has been submitted. Our Creative Director is reviewing your request. A styling consultant will reach out via WhatsApp (+91 97466 95575) within 24 hours to confirm your scheduling options.
+                Your briefing file has been submitted. Our Creative Director is reviewing your request. A styling consultant will reach out via WhatsApp (+91 62354 56525) within 24 hours to confirm your scheduling options.
               </p>
               <button
                 onClick={() => setSubmitted(false)}
-                className="px-8 py-3 text-xs font-bold tracking-widest text-zinc-750 dark:text-zinc-300 border border-zinc-250 dark:border-zinc-700 hover:border-amber-500 hover:text-white rounded-full uppercase transition-all duration-300 bg-transparent cursor-pointer"
+                className="px-8 py-3 text-xs font-bold tracking-widest text-zinc-750 dark:text-zinc-300 border border-zinc-250 dark:border-zinc-700 hover:border-red-600 hover:text-white rounded-full uppercase transition-all duration-300 bg-transparent cursor-pointer"
               >
                 Book Another Session
               </button>
@@ -185,8 +208,8 @@ export default function BookingForm() {
               
               {/* SECTION 1: Personal Coordinates */}
               <div className="space-y-6">
-                <h3 className="font-display text-xs font-bold tracking-[0.25em] text-red-500 uppercase pb-2 border-b border-zinc-200 dark:border-zinc-800/60">
-                  SECTION 1 // INDIVIDUAL COORDINATES
+                <h3 className="font-display text-xs font-bold tracking-[0.25em] text-gold-accent uppercase pb-2 border-b border-zinc-200 dark:border-zinc-800/60">
+                  SECTION 1 <span className="text-red-500">//</span> INDIVIDUAL COORDINATES
                 </h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   {/* Name */}
@@ -199,7 +222,7 @@ export default function BookingForm() {
                       type="text"
                       placeholder="e.g. Adithya Nair"
                       {...register("name", { required: "Name is required" })}
-                      className="w-full px-5 py-3.5 rounded-lg bg-white dark:bg-zinc-950/60 border border-zinc-200 dark:border-zinc-800 text-zinc-850 dark:text-zinc-200 placeholder-zinc-400 dark:placeholder-zinc-600 focus:outline-none focus:border-red-600 font-sans text-sm transition-all"
+                      className="w-full px-5 py-3.5 rounded-lg bg-white dark:bg-zinc-950/60 border border-zinc-200 dark:border-zinc-800 text-zinc-850 dark:text-zinc-200 placeholder-zinc-400 dark:placeholder-zinc-600 focus:outline-none focus:border-gold-accent font-sans text-sm transition-all"
                     />
                     {errors.name && (
                       <span className="text-[10px] text-red-500 flex items-center gap-1.5 mt-1">
@@ -224,7 +247,7 @@ export default function BookingForm() {
                           message: "Please enter a valid phone number",
                         },
                       })}
-                      className="w-full px-5 py-3.5 rounded-lg bg-white dark:bg-zinc-950/60 border border-zinc-200 dark:border-zinc-800 text-zinc-850 dark:text-zinc-200 placeholder-zinc-400 dark:placeholder-zinc-600 focus:outline-none focus:border-red-600 font-sans text-sm transition-all"
+                      className="w-full px-5 py-3.5 rounded-lg bg-white dark:bg-zinc-950/60 border border-zinc-200 dark:border-zinc-800 text-zinc-850 dark:text-zinc-200 placeholder-zinc-400 dark:placeholder-zinc-600 focus:outline-none focus:border-gold-accent font-sans text-sm transition-all"
                     />
                     {errors.phone && (
                       <span className="text-[10px] text-red-500 flex items-center gap-1.5 mt-1">
@@ -250,7 +273,7 @@ export default function BookingForm() {
                         message: "Please enter a valid email address",
                       },
                     })}
-                    className="w-full px-5 py-3.5 rounded-lg bg-white dark:bg-zinc-950/60 border border-zinc-200 dark:border-zinc-800 text-zinc-850 dark:text-zinc-200 placeholder-zinc-400 dark:placeholder-zinc-600 focus:outline-none focus:border-red-600 font-sans text-sm transition-all"
+                    className="w-full px-5 py-3.5 rounded-lg bg-white dark:bg-zinc-950/60 border border-zinc-200 dark:border-zinc-800 text-zinc-850 dark:text-zinc-200 placeholder-zinc-400 dark:placeholder-zinc-600 focus:outline-none focus:border-gold-accent font-sans text-sm transition-all"
                   />
                   {errors.email && (
                     <span className="text-[10px] text-red-500 flex items-center gap-1.5 mt-1">
@@ -262,8 +285,8 @@ export default function BookingForm() {
 
               {/* SECTION 2: Project Specifications */}
               <div className="space-y-6">
-                <h3 className="font-display text-xs font-bold tracking-[0.25em] text-red-500 uppercase pb-2 border-b border-zinc-200 dark:border-zinc-800/60">
-                  SECTION 2 // PROJECT SPECIFICATIONS
+                <h3 className="font-display text-xs font-bold tracking-[0.25em] text-gold-accent uppercase pb-2 border-b border-zinc-200 dark:border-zinc-800/60">
+                  SECTION 2 <span className="text-red-500">//</span> PROJECT SPECIFICATIONS
                 </h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   {/* Service */}
@@ -271,14 +294,19 @@ export default function BookingForm() {
                     <label htmlFor="service" className="text-[10px] font-bold tracking-widest text-zinc-500 dark:text-zinc-400 uppercase">
                       Preferred Service *
                     </label>
-                    <select
-                      id="service"
-                      {...register("service")}
-                      className="w-full px-5 py-3.5 rounded-lg bg-white dark:bg-zinc-950/60 border border-zinc-200 dark:border-zinc-800 text-zinc-850 dark:text-zinc-200 focus:outline-none focus:border-red-600 font-sans text-sm transition-all appearance-none cursor-pointer"
-                    >
-                      <option value="tattoo">Custom Tattooing</option>
-                      <option value="piercing">Precision Piercing</option>
-                    </select>
+                    <div className="relative">
+                      <select
+                        id="service"
+                        {...register("service")}
+                        className="w-full px-5 py-3.5 pr-10 rounded-lg bg-white dark:bg-zinc-950/60 border border-zinc-200 dark:border-zinc-800 text-zinc-850 dark:text-zinc-200 focus:outline-none focus:border-gold-accent font-sans text-sm transition-all appearance-none cursor-pointer"
+                      >
+                        <option value="tattoo">Custom Tattooing</option>
+                        <option value="piercing">Precision Piercing</option>
+                      </select>
+                      <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-zinc-400 dark:text-zinc-600">
+                        <ChevronDown size={16} />
+                      </div>
+                    </div>
                   </div>
 
                   {/* Date Selection */}
@@ -292,7 +320,7 @@ export default function BookingForm() {
                         type="date"
                         min={new Date().toISOString().split("T")[0]}
                         {...register("date", { required: "Date is required" })}
-                        className="w-full px-5 py-3.5 rounded-lg bg-white dark:bg-zinc-950/60 border border-zinc-200 dark:border-zinc-800 text-zinc-850 dark:text-zinc-200 focus:outline-none focus:border-red-600 font-sans text-sm transition-all cursor-pointer"
+                        className="w-full px-5 py-3.5 rounded-lg bg-white dark:bg-zinc-950/60 border border-zinc-200 dark:border-zinc-800 text-zinc-850 dark:text-zinc-200 focus:outline-none focus:border-gold-accent font-sans text-sm transition-all cursor-pointer"
                       />
                     </div>
                     {errors.date && (
@@ -311,19 +339,24 @@ export default function BookingForm() {
                       <label htmlFor="style" className="text-[10px] font-bold tracking-widest text-zinc-500 dark:text-zinc-400 uppercase">
                         Tattoo Style *
                       </label>
-                      <select
-                        id="style"
-                        {...register("style")}
-                        className="w-full px-5 py-3.5 rounded-lg bg-white dark:bg-zinc-950/60 border border-zinc-200 dark:border-zinc-800 text-zinc-850 dark:text-zinc-200 focus:outline-none focus:border-red-600 font-sans text-sm transition-all appearance-none cursor-pointer"
-                      >
-                        <option value="fine-line">Fine Line / Micro-realism</option>
-                        <option value="realism">Shaded Realism</option>
-                        <option value="biomech">Bio-Mechanical / Heavy Ink</option>
-                        <option value="traditional">Traditional / Neo-Trad</option>
-                        <option value="tribal">Tribal / Blackwork</option>
-                        <option value="geometry">Geometric / Mandala</option>
-                        <option value="other">Other / Custom Concept</option>
-                      </select>
+                      <div className="relative">
+                        <select
+                          id="style"
+                          {...register("style")}
+                          className="w-full px-5 py-3.5 pr-10 rounded-lg bg-white dark:bg-zinc-950/60 border border-zinc-200 dark:border-zinc-800 text-zinc-850 dark:text-zinc-200 focus:outline-none focus:border-gold-accent font-sans text-sm transition-all appearance-none cursor-pointer"
+                        >
+                          <option value="fine-line">Fine Line / Micro-realism</option>
+                          <option value="realism">Shaded Realism</option>
+                          <option value="biomech">Bio-Mechanical / Heavy Ink</option>
+                          <option value="traditional">Traditional / Neo-Trad</option>
+                          <option value="tribal">Tribal / Blackwork</option>
+                          <option value="geometry">Geometric / Mandala</option>
+                          <option value="other">Other / Custom Concept</option>
+                        </select>
+                        <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-zinc-400 dark:text-zinc-600">
+                          <ChevronDown size={16} />
+                        </div>
+                      </div>
                     </div>
 
                     {/* Placement */}
@@ -331,20 +364,25 @@ export default function BookingForm() {
                       <label htmlFor="placement" className="text-[10px] font-bold tracking-widest text-zinc-500 dark:text-zinc-400 uppercase">
                         Placement Area *
                       </label>
-                      <select
-                        id="placement"
-                        {...register("placement")}
-                        className="w-full px-5 py-3.5 rounded-lg bg-white dark:bg-zinc-950/60 border border-zinc-200 dark:border-zinc-800 text-zinc-850 dark:text-zinc-200 focus:outline-none focus:border-red-600 font-sans text-sm transition-all appearance-none cursor-pointer"
-                      >
-                        <option value="forearm">Forearm</option>
-                        <option value="upper-arm">Upper Arm / Shoulder</option>
-                        <option value="sleeve">Full Arm Sleeve</option>
-                        <option value="chest-back">Chest / Back</option>
-                        <option value="leg-calf">Leg / Calf / Thigh</option>
-                        <option value="neck-nape">Neck / Nape</option>
-                        <option value="hand-wrist">Hand / Wrist</option>
-                        <option value="other">Other</option>
-                      </select>
+                      <div className="relative">
+                        <select
+                          id="placement"
+                          {...register("placement")}
+                          className="w-full px-5 py-3.5 pr-10 rounded-lg bg-white dark:bg-zinc-950/60 border border-zinc-200 dark:border-zinc-800 text-zinc-850 dark:text-zinc-200 focus:outline-none focus:border-gold-accent font-sans text-sm transition-all appearance-none cursor-pointer"
+                        >
+                          <option value="forearm">Forearm</option>
+                          <option value="upper-arm">Upper Arm / Shoulder</option>
+                          <option value="sleeve">Full Arm Sleeve</option>
+                          <option value="chest-back">Chest / Back</option>
+                          <option value="leg-calf">Leg / Calf / Thigh</option>
+                          <option value="neck-nape">Neck / Nape</option>
+                          <option value="hand-wrist">Hand / Wrist</option>
+                          <option value="other">Other</option>
+                        </select>
+                        <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-zinc-400 dark:text-zinc-600">
+                          <ChevronDown size={16} />
+                        </div>
+                      </div>
                     </div>
 
                     {/* Size */}
@@ -352,16 +390,21 @@ export default function BookingForm() {
                       <label htmlFor="size" className="text-[10px] font-bold tracking-widest text-zinc-500 dark:text-zinc-400 uppercase">
                         Approximate Size *
                       </label>
-                      <select
-                        id="size"
-                        {...register("size")}
-                        className="w-full px-5 py-3.5 rounded-lg bg-white dark:bg-zinc-950/60 border border-zinc-200 dark:border-zinc-800 text-zinc-850 dark:text-zinc-200 focus:outline-none focus:border-red-600 font-sans text-sm transition-all appearance-none cursor-pointer"
-                      >
-                        <option value="small">Small (under 3 inches)</option>
-                        <option value="medium">Medium (3 - 6 inches)</option>
-                        <option value="large">Large (6 - 10 inches)</option>
-                        <option value="sleeve-project">Multi-session / Large Scale</option>
-                      </select>
+                      <div className="relative">
+                        <select
+                          id="size"
+                          {...register("size")}
+                          className="w-full px-5 py-3.5 pr-10 rounded-lg bg-white dark:bg-zinc-950/60 border border-zinc-200 dark:border-zinc-800 text-zinc-850 dark:text-zinc-200 focus:outline-none focus:border-gold-accent font-sans text-sm transition-all appearance-none cursor-pointer"
+                        >
+                          <option value="small">Small (under 3 inches)</option>
+                          <option value="medium">Medium (3 - 6 inches)</option>
+                          <option value="large">Large (6 - 10 inches)</option>
+                          <option value="sleeve-project">Multi-session / Large Scale</option>
+                        </select>
+                        <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-zinc-400 dark:text-zinc-600">
+                          <ChevronDown size={16} />
+                        </div>
+                      </div>
                     </div>
                   </div>
                 )}
@@ -369,56 +412,9 @@ export default function BookingForm() {
 
               {/* SECTION 3: Visual References & Notes */}
               <div className="space-y-6">
-                <h3 className="font-display text-xs font-bold tracking-[0.25em] text-red-500 uppercase pb-2 border-b border-zinc-200 dark:border-zinc-800/60">
-                  SECTION 3 // BRIEFING DOSSIER
+                <h3 className="font-display text-xs font-bold tracking-[0.25em] text-gold-accent uppercase pb-2 border-b border-zinc-200 dark:border-zinc-800/60">
+                  SECTION 3 <span className="text-red-500">//</span> BRIEFING DOSSIER
                 </h3>
-
-                {/* Reference Upload */}
-                <div className="flex flex-col gap-2">
-                  <label className="text-[10px] font-bold tracking-widest text-zinc-500 dark:text-zinc-400 uppercase">
-                    Reference Visual / Design Sketch
-                  </label>
-                  <div
-                    onDragEnter={handleDrag}
-                    onDragOver={handleDrag}
-                    onDragLeave={handleDrag}
-                    onDrop={handleDrop}
-                    onClick={() => fileInputRef.current?.click()}
-                    className={`${
-                      isDragActive
-                        ? "border-amber-500 bg-amber-950/10"
-                        : "border-zinc-200 dark:border-zinc-800 hover:border-zinc-400 dark:hover:border-zinc-500 bg-zinc-50 dark:bg-zinc-950/20"
-                    } border-2 border-dashed rounded-lg p-8 text-center flex flex-col items-center justify-center gap-3 cursor-pointer transition-all duration-300`}
-                  >
-                    <input
-                      ref={fileInputRef}
-                      type="file"
-                      accept="image/*"
-                      onChange={handleFileChange}
-                      className="hidden"
-                    />
-
-                    {filePreview ? (
-                      <div className="relative w-28 h-28 rounded-md overflow-hidden border border-zinc-200 dark:border-zinc-700 shadow-md">
-                        <img src={filePreview} alt="Reference preview" className="w-full h-full object-cover" />
-                        <div className="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity">
-                          <span className="text-[9px] font-bold uppercase text-white">Change File</span>
-                        </div>
-                      </div>
-                    ) : (
-                      <>
-                        <Upload className="w-6 h-6 text-zinc-400 dark:text-zinc-500 group-hover:text-zinc-300" />
-                        <span className="text-xs text-zinc-600 dark:text-zinc-400 font-light">
-                          Drag and drop your reference image here, or{" "}
-                          <span className="text-red-500 font-semibold underline">browse files</span>
-                        </span>
-                        <span className="text-[9px] text-zinc-500 dark:text-zinc-600 uppercase">
-                          Supports PNG, JPG (Max 5MB)
-                        </span>
-                      </>
-                    )}
-                  </div>
-                </div>
 
                 {/* Additional Notes */}
                 <div className="flex flex-col gap-2">
@@ -426,11 +422,11 @@ export default function BookingForm() {
                     Detailed Project Briefing
                   </label>
                   <textarea
-                    id="notes"
-                    rows={4}
-                    placeholder="Describe your design concept, symbolism, placement details, and any background styling preferences..."
-                    {...register("notes")}
-                    className="w-full px-5 py-3.5 rounded-lg bg-white dark:bg-zinc-950/60 border border-zinc-200 dark:border-zinc-800 text-zinc-850 dark:text-zinc-200 placeholder-zinc-400 dark:placeholder-zinc-600 focus:outline-none focus:border-red-600 font-sans text-sm transition-all resize-none"
+                     id="notes"
+                     rows={4}
+                     placeholder="Describe your design concept, symbolism, placement details, and any background styling preferences..."
+                     {...register("notes")}
+                     className="w-full px-5 py-3.5 rounded-lg bg-white dark:bg-zinc-950/60 border border-zinc-200 dark:border-zinc-800 text-zinc-850 dark:text-zinc-200 placeholder-zinc-400 dark:placeholder-zinc-600 focus:outline-none focus:border-gold-accent font-sans text-sm transition-all resize-none"
                   />
                 </div>
               </div>
@@ -446,13 +442,13 @@ export default function BookingForm() {
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="w-full py-4 text-xs font-bold tracking-[0.3em] bg-amber-500 hover:bg-amber-600 disabled:bg-zinc-800 disabled:text-zinc-500 disabled:cursor-not-allowed text-white uppercase rounded-lg transition-all duration-300 shadow-[0_4px_30px_rgba(245,158,11,0.2)] hover:scale-[1.01] cursor-pointer relative overflow-hidden group"
+                  className="w-full py-4 text-xs font-black tracking-[0.3em] bg-gold-accent hover:bg-gold-accent/90 disabled:bg-zinc-800 disabled:text-zinc-500 disabled:cursor-not-allowed text-black uppercase rounded-lg transition-all duration-300 shadow-[0_4px_30px_rgba(221,177,30,0.25)] hover:scale-[1.01] relative overflow-hidden group cursor-pointer"
                   data-cursor-text={isSubmitting ? "WAIT" : "CONFIRM"}
                 >
-                  <span className="relative z-10">
+                  <span className="relative z-10 font-bold">
                     {isSubmitting ? "TRANSMITTING BRIEF..." : "BOOK CONSULTATION SESSION"}
                   </span>
-                  <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-amber-600 to-amber-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300 -z-0" />
+                  <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-gold-accent to-yellow-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300 -z-0" />
                 </button>
               </div>
 

@@ -74,7 +74,7 @@ export default function Footer() {
                   <a
                     href={link.href}
                     onClick={(e) => handleScrollTo(e, link.href)}
-                    className="hover:text-red-500 transition-colors duration-300"
+                    className="hover:text-gold-accent transition-colors duration-300"
                   >
                     {link.label}
                   </a>
@@ -90,22 +90,22 @@ export default function Footer() {
             </h4>
             <ul className="space-y-2.5 text-xs font-light">
               <li>
-                <a href="#services" onClick={(e) => handleScrollTo(e, "#services")} className="hover:text-red-500 transition-colors duration-300">
+                <a href="#services" onClick={(e) => handleScrollTo(e, "#services")} className="hover:text-gold-accent transition-colors duration-300">
                   Custom Tattooing
                 </a>
               </li>
               <li>
-                <a href="#services" onClick={(e) => handleScrollTo(e, "#services")} className="hover:text-red-500 transition-colors duration-300">
+                <a href="#services" onClick={(e) => handleScrollTo(e, "#services")} className="hover:text-gold-accent transition-colors duration-300">
                   Precision Piercing
                 </a>
               </li>
               <li>
-                <a href="#booking" onClick={(e) => handleScrollTo(e, "#booking")} className="hover:text-red-500 transition-colors duration-300">
+                <a href="#booking" onClick={(e) => handleScrollTo(e, "#booking")} className="hover:text-gold-accent transition-colors duration-300">
                   Curated Ear Styling
                 </a>
               </li>
               <li>
-                <a href="#booking" onClick={(e) => handleScrollTo(e, "#booking")} className="hover:text-red-500 transition-colors duration-300">
+                <a href="#booking" onClick={(e) => handleScrollTo(e, "#booking")} className="hover:text-gold-accent transition-colors duration-300">
                   Creative Design Consults
                 </a>
               </li>
@@ -120,8 +120,8 @@ export default function Footer() {
             <ul className="space-y-3 text-xs font-light">
               <li>
                 <span className="block text-[9px] font-bold tracking-widest text-zinc-600 uppercase mb-0.5">Phone Line</span>
-                <a href="tel:+919746695575" className="text-zinc-300 hover:text-red-500 transition-colors">
-                  +91 97466 95575
+                <a href="tel:+916235456525" className="text-zinc-300 hover:text-gold-accent transition-colors">
+                  +91 62354 56525
                 </a>
               </li>
               <li>
@@ -131,13 +131,13 @@ export default function Footer() {
                     href="https://www.instagram.com/blackholetattoos"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-zinc-500 hover:text-red-500 transition-colors"
+                    className="text-zinc-500 hover:text-gold-accent transition-colors"
                     aria-label="Instagram Link"
                   >
                     <Instagram size={16} />
                   </a>
                   <a
-                    href="https://wa.me/919746695575"
+                    href="https://api.whatsapp.com/send?phone=916235456525"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-zinc-500 hover:text-green-500 transition-colors"
@@ -166,7 +166,7 @@ export default function Footer() {
           </div>
           
           <div className="text-[9px] tracking-widest text-zinc-500 uppercase font-bold">
-            crafted and designed by <span className="text-red-500">Aethra Digital Solutions</span>
+            crafted and designed by <a href="https://aethrasolutions.in" target="_blank" rel="noopener noreferrer" className="text-red-500 hover:underline transition-all">Aethra Digital Solutions</a>
           </div>
         </div>
 

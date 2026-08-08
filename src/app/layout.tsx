@@ -60,13 +60,13 @@ export default function RootLayout({
     "name": "BLACKHOLE Tattoos & Piercings",
     "image": "/assets/media__1782481664436.png",
     "priceRange": "₹₹₹",
-    "telephone": "+919746695575",
+    "telephone": "+916235456525",
     "address": {
       "@type": "PostalAddress",
-      "streetAddress": "Kottayam - Kumily Rd, Kalathipady",
+      "streetAddress": "2nd Floor, Grand Opera Building, Near KSRTC Terminal",
       "addressLocality": "Kottayam",
       "addressRegion": "Kerala",
-      "postalCode": "686010",
+      "postalCode": "686001",
       "addressCountry": "IN"
     },
     "geo": {
@@ -74,7 +74,7 @@ export default function RootLayout({
       "latitude": 9.5923984,
       "longitude": 76.5204683
     },
-    "url": "https://maps.google.com/?q=BLACK+HOLE+TATTOOS+%26+PIERCING+KOTTAYAM",
+    "url": "https://www.google.com/maps/place/BLACK+HOLE+TATTOOS+%26+PIERCING+KOTTAYAM/@9.5923984,76.5204683,17z",
     "openingHoursSpecification": [
       {
         "@type": "OpeningHoursSpecification",
