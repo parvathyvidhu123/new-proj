@@ -17,7 +17,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     // Read from localStorage (always default to dark if not set)
-    const savedTheme = localStorage.getItem("blackhole-theme") as Theme;
+    const savedTheme = localStorage.getItem("blackhole-theme-v2") as Theme;
     
     if (savedTheme) {
       setTheme(savedTheme);
@@ -40,7 +40,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
       root.classList.add("light");
       root.style.colorScheme = "light";
     }
-    localStorage.setItem("blackhole-theme", theme);
+    localStorage.setItem("blackhole-theme-v2", theme);
   }, [theme, mounted]);
 
   const toggleTheme = () => {
