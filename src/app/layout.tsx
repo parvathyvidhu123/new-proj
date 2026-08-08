@@ -9,6 +9,11 @@ export const metadata: Metadata = {
   title: "BLACKHOLE • Premium Tattoo & Piercing Studio | Kottayam, Kerala",
   description:
     "Discover BLACKHOLE, the premier custom tattoo and precision piercing studio in Kottayam, Kerala. Uncompromising hygiene, award-winning artists, and bespoke digital skin artistry.",
+  icons: {
+    icon: "/icon.png",
+    shortcut: "/icon.png",
+    apple: "/icon.png",
+  },
   keywords: [
     "BLACKHOLE Tattoos Kottayam",
     "Best Tattoo Studio Kottayam",

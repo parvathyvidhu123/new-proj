@@ -16,14 +16,13 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    // Read from localStorage or system preference
+    // Read from localStorage (always default to dark if not set)
     const savedTheme = localStorage.getItem("blackhole-theme") as Theme;
-    const systemPrefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
     
     if (savedTheme) {
       setTheme(savedTheme);
-    } else if (systemPrefersDark === false) {
-      setTheme("light");
+    } else {
+      setTheme("dark");
     }
     setMounted(true);
   }, []);
