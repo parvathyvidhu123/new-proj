@@ -41,4 +41,10 @@ yarn-error.log*
 next-env.d.ts
 
 .vercel
+
+# database
+/prisma/dev.db
+/prisma/dev.db-journal
+*.db
+*.db-journal
 .env*

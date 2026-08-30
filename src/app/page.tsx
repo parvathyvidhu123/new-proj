@@ -16,6 +16,48 @@ import Footer from "../components/Footer";
 export default function Home() {
   const [loading, setLoading] = useState(true);
 
+  // Check if page loaded once in current session to skip loader
+  useEffect(() => {
+    if (typeof window !== "undefined" && sessionStorage.getItem("hasLoadedOnce")) {
+      setTimeout(() => setLoading(false), 0);
+    }
+  }, []);
+
+  const handleFinishedLoading = () => {
+    setLoading(false);
+    if (typeof window !== "undefined") {
+      sessionStorage.setItem("hasLoadedOnce", "true");
+    }
+  };
+
+  // Handle manual hash scroll after loading completes
+  useEffect(() => {
+    if (loading) return;
+    
+    const handleHashScroll = () => {
+      const hash = window.location.hash;
+      if (hash) {
+        const element = document.querySelector(hash);
+        if (element) {
+          const offset = 80; // navbar offset
+          const bodyRect = document.body.getBoundingClientRect().top;
+          const elementRect = element.getBoundingClientRect().top;
+          const elementPosition = elementRect - bodyRect;
+          const offsetPosition = elementPosition - offset;
+
+          window.scrollTo({
+            top: offsetPosition,
+            behavior: "smooth",
+          });
+        }
+      }
+    };
+
+    // Delay scroll slightly to let layout mount without blocking initial page loading
+    const timer = setTimeout(handleHashScroll, 350);
+    return () => clearTimeout(timer);
+  }, [loading]);
+
   // Initialize Lenis Smooth Scroll
   useEffect(() => {
     if (loading) return;
@@ -47,7 +89,7 @@ export default function Home() {
   return (
     <>
       {loading ? (
-        <LoadingScreen onFinished={() => setLoading(false)} />
+        <LoadingScreen onFinished={handleFinishedLoading} />
       ) : (
         <div className="w-full min-h-screen bg-matte-black text-zinc-100 flex flex-col overflow-x-hidden animate-fade-in duration-1000">
           {/* 1. Hero Landing Section */}

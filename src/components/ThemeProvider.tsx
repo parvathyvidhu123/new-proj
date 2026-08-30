@@ -1,8 +1,8 @@
 "use client";
 
-import React, { createContext, useContext, useEffect, useState } from "react";
+import React, { createContext, useContext, useEffect } from "react";
 
-type Theme = "dark" | "light";
+type Theme = "dark";
 
 type ThemeContextType = {
   theme: Theme;
@@ -12,43 +12,15 @@ type ThemeContextType = {
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
-  const [theme, setTheme] = useState<Theme>("dark");
-  const [mounted, setMounted] = useState(false);
-
   useEffect(() => {
-    // Read from localStorage (always default to dark if not set)
-    const savedTheme = localStorage.getItem("blackhole-theme-v2") as Theme;
-    
-    if (savedTheme) {
-      setTheme(savedTheme);
-    } else {
-      setTheme("dark");
-    }
-    setMounted(true);
+    const root = document.documentElement;
+    root.classList.add("dark");
+    root.classList.remove("light");
+    root.style.colorScheme = "dark";
   }, []);
 
-  useEffect(() => {
-    if (!mounted) return;
-    
-    const root = document.documentElement;
-    if (theme === "dark") {
-      root.classList.add("dark");
-      root.classList.remove("light");
-      root.style.colorScheme = "dark";
-    } else {
-      root.classList.remove("dark");
-      root.classList.add("light");
-      root.style.colorScheme = "light";
-    }
-    localStorage.setItem("blackhole-theme-v2", theme);
-  }, [theme, mounted]);
-
-  const toggleTheme = () => {
-    setTheme((prev) => (prev === "dark" ? "light" : "dark"));
-  };
-
   return (
-    <ThemeContext.Provider value={{ theme, toggleTheme }}>
+    <ThemeContext.Provider value={{ theme: "dark", toggleTheme: () => {} }}>
       {children}
     </ThemeContext.Provider>
   );

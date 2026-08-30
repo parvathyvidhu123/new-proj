@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 import { db } from "@/lib/db";
 
 export async function GET() {
@@ -8,7 +8,7 @@ export async function GET() {
       take: 100, // limit to 100 items
     });
     return NextResponse.json(logs);
-  } catch (error: any) {
+  } catch (error) {
     console.error("API Error in GET /api/whatsapp-logs:", error);
     return NextResponse.json({ error: "Failed to fetch logs" }, { status: 500 });
   }
@@ -18,7 +18,7 @@ export async function DELETE() {
   try {
     await db.whatsappLog.deleteMany({});
     return NextResponse.json({ success: true, message: "Logs cleared" });
-  } catch (error: any) {
+  } catch (error) {
     console.error("API Error in DELETE /api/whatsapp-logs:", error);
     return NextResponse.json({ error: "Failed to clear logs" }, { status: 500 });
   }

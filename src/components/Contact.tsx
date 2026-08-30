@@ -33,6 +33,8 @@ export default function Contact() {
         ? "Custom Tattooing" 
         : data.service === "piercing" 
         ? "Precision Piercing" 
+        : data.service === "microblading"
+        ? "Microblading Brow Styling"
         : "General Consultation / Enquiry";
 
       // 1. Submit to local SQLite database via API
@@ -81,9 +83,10 @@ export default function Contact() {
         reset();
       }, 1000);
 
-    } catch (err: any) {
-      console.error("Contact error:", err);
-      setSubmitError(err.message || "An unexpected error occurred. Please try again.");
+    } catch (err) {
+      const errorObj = err as Error;
+      console.error("Contact error:", errorObj);
+      setSubmitError(errorObj.message || "An unexpected error occurred. Please try again.");
     } finally {
       setIsSubmitting(false);
     }
@@ -182,10 +185,10 @@ export default function Contact() {
                 <Instagram size={16} /> Instagram
               </a>
               <a
-                href="tel:+916235456525"
+                href="tel:+919746695575"
                 className="px-6 py-3 rounded-lg bg-blue-950/20 hover:bg-blue-600 border border-blue-800 text-white font-sans text-xs font-bold tracking-widest uppercase flex items-center gap-2 transition-all duration-300"
               >
-                <Phone size={16} /> +91 62354 56525
+                <Phone size={16} /> +91 97466 95575
               </a>
             </div>
 
@@ -243,7 +246,7 @@ export default function Contact() {
               <div className="space-y-4">
                 {reviewHighlights.map((rev, i) => (
                   <div key={i} className="text-xs font-light leading-relaxed text-zinc-650 dark:text-zinc-400 pl-4 border-l border-red-600/30">
-                    <p className="italic">"{rev.text}"</p>
+                    <p className="italic">&ldquo;{rev.text}&rdquo;</p>
                     <span className="block mt-1 font-bold text-zinc-500 dark:text-zinc-400 uppercase tracking-wider text-[9px]">
                       — {rev.author}
                     </span>
@@ -258,7 +261,7 @@ export default function Contact() {
           <div className="lg:col-span-5">
             <div className="glass-premium bg-white/90 dark:bg-zinc-900/90 p-8 md:p-10 rounded-xl border border-zinc-200 dark:border-zinc-800 shadow-xl">
               <h3 className="font-display text-xs font-bold tracking-[0.25em] text-gold-accent uppercase pb-4 border-b border-zinc-200 dark:border-zinc-800/60 mb-6">
-                FORM <span className="text-red-500">//</span> EXPRESS INQUIRY
+                FORM <span className="text-red-500">{"//"}</span> EXPRESS INQUIRY
               </h3>
 
               {submitted ? (
@@ -340,6 +343,7 @@ export default function Contact() {
                       >
                         <option value="tattoo">Custom Tattooing</option>
                         <option value="piercing">Precision Piercing</option>
+                        <option value="microblading">Microblading Brow Styling</option>
                         <option value="general">General Consultation / Enquiry</option>
                       </select>
                       <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-zinc-400 dark:text-zinc-650">

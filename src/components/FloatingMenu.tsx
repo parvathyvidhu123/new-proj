@@ -40,7 +40,7 @@ export default function FloatingMenu() {
     {
       icon: <Phone size={18} />,
       label: "Call Now",
-      href: "tel:+916235456525",
+      href: "tel:+919746695575",
       color: "bg-blue-600 hover:bg-blue-700 text-white shadow-blue-900/40",
       cursorText: "Call",
     },

@@ -65,8 +65,10 @@ export function HeroScrub({
     if (!firstUrl) return;
 
     // Reset loading states for a fresh attempt
-    setFramesOk(true);
-    setReady(false);
+    setTimeout(() => {
+      setFramesOk(true);
+      setReady(false);
+    }, 0);
 
     let cancelled = false;
     let errored = 0;

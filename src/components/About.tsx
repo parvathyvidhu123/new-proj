@@ -79,7 +79,7 @@ export default function About() {
           
           <div className="relative aspect-[3/4] w-full h-[500px] md:h-[600px] overflow-hidden">
             <Image
-              src="/assets/media__1782481718951.png"
+              src="/assets/about_craftsmanship.webp"
               alt="Artistic Craftsmanship at BLACKHOLE"
               fill
               sizes="(max-width: 1024px) 100vw, 50vw"
@@ -90,7 +90,7 @@ export default function About() {
 
           {/* Hanging Tag */}
           <div className="absolute bottom-6 left-6 z-20 glass px-5 py-3 rounded-md border border-white/5">
-            <p className="font-serif text-sm italic text-zinc-300">"Art is in the details, trust is in the hygiene."</p>
+            <p className="font-serif text-sm italic text-zinc-300">&ldquo;Art is in the details, trust is in the hygiene.&rdquo;</p>
           </div>
         </div>
 

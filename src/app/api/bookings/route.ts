@@ -46,9 +46,10 @@ export async function POST(req: NextRequest) {
     });
 
     return NextResponse.json({ success: true, booking }, { status: 201 });
-  } catch (error: any) {
-    console.error("API Error in POST /api/bookings:", error);
-    return NextResponse.json({ error: error.message || "Failed to create booking" }, { status: 500 });
+  } catch (error) {
+    const err = error as Error;
+    console.error("API Error in POST /api/bookings:", err);
+    return NextResponse.json({ error: err.message || "Failed to create booking" }, { status: 500 });
   }
 }
 
@@ -58,7 +59,7 @@ export async function GET() {
       orderBy: { createdAt: "desc" },
     });
     return NextResponse.json(bookings);
-  } catch (error: any) {
+  } catch (error) {
     console.error("API Error in GET /api/bookings:", error);
     return NextResponse.json({ error: "Failed to fetch bookings" }, { status: 500 });
   }
@@ -79,7 +80,7 @@ export async function PATCH(req: NextRequest) {
     });
 
     return NextResponse.json({ success: true, booking: updated });
-  } catch (error: any) {
+  } catch (error) {
     console.error("API Error in PATCH /api/bookings:", error);
     return NextResponse.json({ error: "Failed to update booking status" }, { status: 500 });
   }
@@ -99,7 +100,7 @@ export async function DELETE(req: NextRequest) {
     });
 
     return NextResponse.json({ success: true, message: "Booking deleted" });
-  } catch (error: any) {
+  } catch (error) {
     console.error("API Error in DELETE /api/bookings:", error);
     return NextResponse.json({ error: "Failed to delete booking" }, { status: 500 });
   }

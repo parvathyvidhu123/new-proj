@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import { Calendar, Clock, CheckCircle2, AlertCircle, ChevronDown } from "lucide-react";
+import { CheckCircle2, AlertCircle, ChevronDown } from "lucide-react";
 import confetti from "canvas-confetti";
 
 type FormData = {
@@ -83,6 +83,7 @@ export default function BookingForm() {
         switch (val) {
           case "tattoo": return "Custom Tattooing";
           case "piercing": return "Precision Piercing";
+          case "microblading": return "Microblading Brow Styling";
           default: return val;
         }
       };
@@ -150,9 +151,10 @@ export default function BookingForm() {
       setSubmitted(true);
       triggerConfetti();
       reset();
-    } catch (err: any) {
-      console.error("Booking error:", err);
-      setSubmitError(err.message || "Something went wrong. Please try again.");
+    } catch (err) {
+      const errorObj = err as Error;
+      console.error("Booking error:", errorObj);
+      setSubmitError(errorObj.message || "Something went wrong. Please try again.");
     } finally {
       setIsSubmitting(false);
     }
@@ -193,7 +195,7 @@ export default function BookingForm() {
                 CONSULTATION SECURED
               </h3>
               <p className="font-sans text-sm font-light text-zinc-600 dark:text-zinc-400 max-w-md leading-relaxed mb-8">
-                Your briefing file has been submitted. Our Creative Director is reviewing your request. A styling consultant will reach out via WhatsApp (+91 62354 56525) within 24 hours to confirm your scheduling options.
+                Your briefing file has been submitted. Our Creative Director is reviewing your request. A styling consultant will reach out via WhatsApp (+91 97466 95575) within 24 hours to confirm your scheduling options.
               </p>
               <button
                 onClick={() => setSubmitted(false)}
@@ -209,7 +211,7 @@ export default function BookingForm() {
               {/* SECTION 1: Personal Coordinates */}
               <div className="space-y-6">
                 <h3 className="font-display text-xs font-bold tracking-[0.25em] text-gold-accent uppercase pb-2 border-b border-zinc-200 dark:border-zinc-800/60">
-                  SECTION 1 <span className="text-red-500">//</span> INDIVIDUAL COORDINATES
+                  SECTION 1 <span className="text-red-500">{"//"}</span> INDIVIDUAL COORDINATES
                 </h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   {/* Name */}
@@ -286,7 +288,7 @@ export default function BookingForm() {
               {/* SECTION 2: Project Specifications */}
               <div className="space-y-6">
                 <h3 className="font-display text-xs font-bold tracking-[0.25em] text-gold-accent uppercase pb-2 border-b border-zinc-200 dark:border-zinc-800/60">
-                  SECTION 2 <span className="text-red-500">//</span> PROJECT SPECIFICATIONS
+                  SECTION 2 <span className="text-red-500">{"//"}</span> PROJECT SPECIFICATIONS
                 </h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   {/* Service */}
@@ -302,6 +304,7 @@ export default function BookingForm() {
                       >
                         <option value="tattoo">Custom Tattooing</option>
                         <option value="piercing">Precision Piercing</option>
+                        <option value="microblading">Microblading Brow Styling</option>
                       </select>
                       <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-zinc-400 dark:text-zinc-600">
                         <ChevronDown size={16} />
@@ -413,7 +416,7 @@ export default function BookingForm() {
               {/* SECTION 3: Visual References & Notes */}
               <div className="space-y-6">
                 <h3 className="font-display text-xs font-bold tracking-[0.25em] text-gold-accent uppercase pb-2 border-b border-zinc-200 dark:border-zinc-800/60">
-                  SECTION 3 <span className="text-red-500">//</span> BRIEFING DOSSIER
+                  SECTION 3 <span className="text-red-500">{"//"}</span> BRIEFING DOSSIER
                 </h3>
 
                 {/* Additional Notes */}

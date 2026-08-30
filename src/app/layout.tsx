@@ -65,7 +65,7 @@ export default function RootLayout({
     "name": "BLACKHOLE Tattoos & Piercings",
     "image": "/assets/media__1782481664436.png",
     "priceRange": "₹₹₹",
-    "telephone": "+916235456525",
+    "telephone": "+919746695575",
     "address": {
       "@type": "PostalAddress",
       "streetAddress": "2nd Floor, Grand Opera Building, Near KSRTC Terminal",

@@ -137,9 +137,9 @@ export async function sendWhatsAppNotification(
       // Mock mode: just log and succeed
       console.log(`[WhatsApp Service] MOCK WhatsApp notification logged successfully.`);
     }
-  } catch (err: any) {
+  } catch (err) {
     status = "Failed";
-    errorMsg = err.message || String(err);
+    errorMsg = (err as Error).message || String(err);
     console.error(`[WhatsApp Service] Failed to send WhatsApp message:`, err);
   }
 

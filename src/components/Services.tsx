@@ -2,7 +2,7 @@
 
 import React, { useRef, useState } from "react";
 import Image from "next/image";
-import { Sparkles, Activity, Eye, Calendar, ShieldCheck, Palette } from "lucide-react";
+import { ShieldCheck, Palette } from "lucide-react";
 
 export default function Services() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -15,10 +15,10 @@ export default function Services() {
       image: "/assets/media__1782481912436.png", // Bio-mech sleeve
       icon: <Palette className="w-5 h-5 text-gold-accent" />,
       description:
-        "Specializing in highly custom, award-winning masterpieces. From intricate micro-realism, fine-line graphics, and heavy blackwork to dark bio-mechanical sleeves, our resident artists translate your vision into a living canvas.",
+        "Specializing in highly custom, award-winning masterpieces. From intricate micro-realism, fine-line graphics, microblading brow styling, and heavy blackwork to dark bio-mechanical sleeves, our resident artists translate your vision into a living canvas.",
       features: [
         "100% Unique Custom Designs",
-        "Fine-Line & Micro-Realism Experts",
+        "Fine-Line & Microblading Experts",
         "Premium Imported Vegan Inks",
         "Comprehensive Aftercare Program",
       ],

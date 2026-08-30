@@ -33,9 +33,10 @@ export async function POST(req: NextRequest) {
     });
 
     return NextResponse.json({ success: true, inquiry }, { status: 201 });
-  } catch (error: any) {
-    console.error("API Error in POST /api/inquiries:", error);
-    return NextResponse.json({ error: error.message || "Failed to create inquiry" }, { status: 500 });
+  } catch (error) {
+    const err = error as Error;
+    console.error("API Error in POST /api/inquiries:", err);
+    return NextResponse.json({ error: err.message || "Failed to create inquiry" }, { status: 500 });
   }
 }
 
@@ -45,7 +46,7 @@ export async function GET() {
       orderBy: { createdAt: "desc" },
     });
     return NextResponse.json(inquiries);
-  } catch (error: any) {
+  } catch (error) {
     console.error("API Error in GET /api/inquiries:", error);
     return NextResponse.json({ error: "Failed to fetch inquiries" }, { status: 500 });
   }
@@ -66,7 +67,7 @@ export async function PATCH(req: NextRequest) {
     });
 
     return NextResponse.json({ success: true, inquiry: updated });
-  } catch (error: any) {
+  } catch (error) {
     console.error("API Error in PATCH /api/inquiries:", error);
     return NextResponse.json({ error: "Failed to update inquiry status" }, { status: 500 });
   }
@@ -86,7 +87,7 @@ export async function DELETE(req: NextRequest) {
     });
 
     return NextResponse.json({ success: true, message: "Inquiry deleted" });
-  } catch (error: any) {
+  } catch (error) {
     console.error("API Error in DELETE /api/inquiries:", error);
     return NextResponse.json({ error: "Failed to delete inquiry" }, { status: 500 });
   }

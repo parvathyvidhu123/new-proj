@@ -12,7 +12,7 @@ export default function CustomCursor() {
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    setMounted(true);
+    setTimeout(() => setMounted(true), 0);
   }, []);
 
   useEffect(() => {

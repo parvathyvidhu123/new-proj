@@ -15,10 +15,11 @@ interface GalleryItem {
 }
 
 export default function Gallery() {
-  const [activeTab, setActiveTab] = useState<"all" | "tattoos" | "piercings" | "recent" | "featured">("all");
+  const [activeTab, setActiveTab] = useState<"all" | "tattoos" | "piercings" | "microblading" | "recent" | "featured">("all");
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
 
   const galleryItems: GalleryItem[] = [
+    // --- TATTOOS ---
     {
       id: 1,
       title: "Bio-Mechanical Sleeve",
@@ -27,15 +28,6 @@ export default function Gallery() {
       src: "/assets/media__1782481912436.png",
       placement: "Full Arm Sleeve",
       aspect: "aspect-[3/4] h-[380px] md:h-[480px]"
-    },
-    {
-      id: 2,
-      title: "Daith & Lobe Curation",
-      category: "piercings",
-      subcategory: "recent",
-      src: "/assets/media__1782481680893.jpg",
-      placement: "Ear Piercing",
-      aspect: "aspect-[1/1] h-[280px] md:h-[320px]"
     },
     {
       id: 3,
@@ -47,31 +39,13 @@ export default function Gallery() {
       aspect: "aspect-[3/4] h-[380px] md:h-[480px]"
     },
     {
-      id: 4,
-      title: "Helix Piercing & Blessed script",
-      category: "piercings",
-      subcategory: "recent",
-      src: "/assets/media__1782481697243.jpg",
-      placement: "Ear & Neck",
-      aspect: "aspect-[3/4] h-[380px] md:h-[420px]"
-    },
-    {
       id: 5,
       title: "Crimson Botanica",
       category: "tattoos",
       subcategory: "featured",
       src: "/assets/media__1782481900360.png",
       placement: "Forearm",
-      aspect: "aspect-[1/1] h-[280px] md:h-[350px]"
-    },
-    {
-      id: 6,
-      title: "Triple Lobe Piercing",
-      category: "piercings",
-      subcategory: "featured",
-      src: "/assets/media__1782481731065.png",
-      placement: "Ear",
-      aspect: "aspect-[3/4] h-[380px] md:h-[460px]"
+      aspect: "aspect-[3/4] h-[380px] md:h-[480px]"
     },
     {
       id: 7,
@@ -89,7 +63,7 @@ export default function Gallery() {
       subcategory: "recent",
       src: "/assets/media__1782481888671.png",
       placement: "Calf",
-      aspect: "aspect-[1/1] h-[280px] md:h-[340px]"
+      aspect: "aspect-[3/4] h-[380px] md:h-[480px]"
     },
     {
       id: 9,
@@ -125,7 +99,91 @@ export default function Gallery() {
       subcategory: "recent",
       src: "/assets/media__1782481991198.jpg",
       placement: "Upper Arm",
-      aspect: "aspect-[1/1] h-[280px] md:h-[320px]"
+      aspect: "aspect-[3/4] h-[380px] md:h-[480px]"
+    },
+
+    // --- PIERCINGS ---
+    {
+      id: 2,
+      title: "Classic Navel Styling",
+      category: "piercings",
+      subcategory: "recent",
+      src: "/assets/piercing_1.webp",
+      placement: "Navel",
+      aspect: "aspect-[3/4] h-[380px] md:h-[480px]"
+    },
+    {
+      id: 4,
+      title: "Triple Cartilage Curation",
+      category: "piercings",
+      subcategory: "featured",
+      src: "/assets/piercing_2.webp",
+      placement: "Ear",
+      aspect: "aspect-[3/4] h-[380px] md:h-[480px]"
+    },
+    {
+      id: 6,
+      title: "Symmetry Chest Dermal",
+      category: "piercings",
+      subcategory: "recent",
+      src: "/assets/piercing_3.webp",
+      placement: "Sternum",
+      aspect: "aspect-[3/4] h-[380px] md:h-[480px]"
+    },
+    {
+      id: 16,
+      title: "Delicate Ear Curation",
+      category: "piercings",
+      subcategory: "featured",
+      src: "/assets/piercing_4.webp",
+      placement: "Helix",
+      aspect: "aspect-[3/4] h-[380px] md:h-[480px]"
+    },
+    {
+      id: 17,
+      title: "Lobe Stud Curation",
+      category: "piercings",
+      subcategory: "featured",
+      src: "/assets/piercing_5.png",
+      placement: "Ear Lobe",
+      aspect: "aspect-[3/4] h-[380px] md:h-[480px]"
+    },
+    {
+      id: 18,
+      title: "Bespoke Cartilage Flat",
+      category: "piercings",
+      subcategory: "recent",
+      src: "/assets/piercing_6.png",
+      placement: "Helix / Flat",
+      aspect: "aspect-[3/4] h-[380px] md:h-[480px]"
+    },
+    // --- MICROBLADING ---
+    {
+      id: 13,
+      title: "Precision Brow Mapping",
+      category: "microblading",
+      subcategory: "featured",
+      src: "/assets/microblading_1.webp",
+      placement: "Eyebrows",
+      aspect: "aspect-[3/4] h-[380px] md:h-[480px]"
+    },
+    {
+      id: 14,
+      title: "Bespoke Brow Feathering",
+      category: "microblading",
+      subcategory: "recent",
+      src: "/assets/microblading_2.webp",
+      placement: "Eyebrows",
+      aspect: "aspect-[3/4] h-[380px] md:h-[480px]"
+    },
+    {
+      id: 15,
+      title: "Fine Brow Illustration",
+      category: "microblading",
+      subcategory: "featured",
+      src: "/assets/microblading_3.webp",
+      placement: "Eyebrows",
+      aspect: "aspect-[3/4] h-[380px] md:h-[480px]"
     }
   ];
 
@@ -134,6 +192,7 @@ export default function Gallery() {
     if (activeTab === "all") return true;
     if (activeTab === "tattoos") return item.category === "tattoos";
     if (activeTab === "piercings") return item.category === "piercings";
+    if (activeTab === "microblading") return item.category === "microblading";
     if (activeTab === "recent") return item.subcategory === "recent";
     if (activeTab === "featured") return item.subcategory === "featured";
     return true;
@@ -164,9 +223,10 @@ export default function Gallery() {
     { key: "all", label: "All Portfolio" },
     { key: "tattoos", label: "Tattoos" },
     { key: "piercings", label: "Piercings" },
+    { key: "microblading", label: "Microblading" },
     { key: "featured", label: "Featured Masterpieces" },
     { key: "recent", label: "Recent Work" },
-  ];
+  ] as const;
 
   return (
     <section
@@ -174,13 +234,10 @@ export default function Gallery() {
       className="relative w-full py-24 md:py-36 bg-matte-black text-zinc-100 border-t border-zinc-900"
     >
       <div className="max-w-7xl mx-auto px-6 md:px-12">
-        
+
         {/* Section Title */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-16">
           <div>
-            <div className="text-xs font-bold tracking-[0.4em] text-gold-accent uppercase mb-4">
-              03 // GALLERY EXHIBITION
-            </div>
             <h2 className="font-display text-4xl md:text-6xl font-black uppercase tracking-tight leading-none">
               THE PORTFOLIO <br />
               <span className="font-serif italic font-light text-gold-accent tracking-wide">OF PERMANENT</span> COLLECTIVES
@@ -192,12 +249,11 @@ export default function Gallery() {
             {tabs.map((tab) => (
               <button
                 key={tab.key}
-                onClick={() => setActiveTab(tab.key as any)}
-                className={`px-5 py-2.5 text-[10px] md:text-xs font-bold tracking-widest uppercase rounded-full border transition-all duration-500 cursor-pointer whitespace-nowrap ${
-                  activeTab === tab.key
-                    ? "bg-gold-accent border-gold-accent text-white shadow-[0_4px_20px_rgba(245,158,11,0.25)]"
-                    : "border-zinc-800 text-zinc-400 hover:text-white hover:border-zinc-500"
-                }`}
+                onClick={() => setActiveTab(tab.key)}
+                className={`px-5 py-2.5 text-[10px] md:text-xs font-bold tracking-widest uppercase rounded-full border transition-all duration-500 cursor-pointer whitespace-nowrap ${activeTab === tab.key
+                  ? "bg-gold-accent border-gold-accent text-white shadow-[0_4px_20px_rgba(245,158,11,0.25)]"
+                  : "border-zinc-800 text-zinc-400 hover:text-white hover:border-zinc-500"
+                  }`}
               >
                 {tab.label}
               </button>
@@ -206,53 +262,67 @@ export default function Gallery() {
         </div>
 
         {/* Masonry Editorial Grid Layout */}
-        <div className="columns-1 sm:columns-2 lg:columns-3 gap-8 space-y-8">
-          {filteredItems.map((item) => (
-            <div
-              key={item.id}
-              onClick={() => openLightbox(item.id)}
-              className="break-inside-avoid relative overflow-hidden rounded-xl border border-zinc-900/60 bg-zinc-950/40 cursor-pointer group shadow-lg"
-              data-cursor-text="VIEW"
-            >
-              {/* Image Container */}
-              <div className={`relative w-full ${item.aspect} overflow-hidden bg-zinc-900`}>
-                <Image
-                  src={item.src}
-                  alt={item.title}
-                  fill
-                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                  className="object-cover transition-transform duration-700 ease-out group-hover:scale-105 filter brightness-[0.85] group-hover:brightness-100"
-                  loading="lazy"
-                />
-                
-                {/* Dark Vignette Layer */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-60 group-hover:opacity-80 transition-opacity duration-500 pointer-events-none" />
+        {filteredItems.length === 0 ? (
+          <div className="w-full flex flex-col items-center justify-center text-center py-24 border border-dashed border-zinc-800/60 rounded-2xl bg-zinc-950/20 max-w-xl mx-auto animate-fade-in">
+            <div className="p-4.5 rounded-full bg-zinc-900 border border-white/5 text-gold-accent mb-4 flex items-center justify-center">
+              <ZoomIn size={24} />
+            </div>
+            <h3 className="font-display text-lg font-black uppercase text-zinc-100 tracking-wider mb-2">
+              PORTFOLIO UNDER COMPILATION
+            </h3>
+            <p className="font-sans text-xs font-light text-zinc-400 max-w-sm leading-relaxed px-6">
+              Our Microblading Brow Styling portfolio is currently being prepared. Please contact the studio or check back soon to see before-and-after cases, or book a consultation to discuss your eyebrow styling.
+            </p>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            {filteredItems.map((item) => (
+              <div
+                key={item.id}
+                onClick={() => openLightbox(item.id)}
+                className="relative overflow-hidden rounded-xl border border-zinc-900/60 bg-zinc-950/40 cursor-pointer group shadow-lg"
+                data-cursor-text="VIEW"
+              >
+                {/* Image Container */}
+                <div className="relative w-full aspect-[3/4] overflow-hidden bg-zinc-900">
+                  <Image
+                    src={item.src}
+                    alt={item.title}
+                    fill
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                    className="object-cover transition-transform duration-700 ease-out group-hover:scale-105 filter brightness-[0.85] group-hover:brightness-100"
+                    loading="lazy"
+                  />
 
-                {/* Subtle light reflections */}
-                <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/5 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-out pointer-events-none" />
-              </div>
+                  {/* Dark Vignette Layer */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-60 group-hover:opacity-80 transition-opacity duration-500 pointer-events-none" />
 
-              {/* Hover Metadata Overlay */}
-              <div className="absolute bottom-0 left-0 w-full p-6 z-10 flex flex-col justify-end translate-y-2 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500 ease-out">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <span className="text-[9px] font-bold tracking-widest text-red-500 uppercase block mb-1">
-                      {item.category.slice(0, -1)} • {item.placement}
-                    </span>
-                    <h3 className="font-display text-lg font-black uppercase text-zinc-100 leading-tight">
-                      {item.title}
-                    </h3>
-                  </div>
-                  
-                  {/* Floating Action Circle */}
-                  <div className="p-2.5 rounded-full bg-red-600 text-white flex items-center justify-center shadow-md scale-75 group-hover:scale-100 transition-transform duration-500">
-                    <ZoomIn size={14} />
+                  {/* Subtle light reflections */}
+                  <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/5 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-out pointer-events-none" />
+                </div>
+
+                {/* Hover Metadata Overlay */}
+                <div className="absolute bottom-0 left-0 w-full p-6 z-10 flex flex-col justify-end translate-y-2 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500 ease-out">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <span className="text-[9px] font-bold tracking-widest text-red-500 uppercase block mb-1">
+                        {item.category.slice(0, -1)} • {item.placement}
+                      </span>
+                      <h3 className="font-display text-lg font-black uppercase text-zinc-100 leading-tight">
+                        {item.title}
+                      </h3>
+                    </div>
+
+                    {/* Floating Action Circle */}
+                    <div className="p-2.5 rounded-full bg-red-600 text-white flex items-center justify-center shadow-md scale-75 group-hover:scale-100 transition-transform duration-500">
+                      <ZoomIn size={14} />
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        )}
 
       </div>
 
@@ -272,7 +342,7 @@ export default function Gallery() {
                 {galleryItems[lightboxIndex].title} ({galleryItems[lightboxIndex].placement})
               </span>
             </div>
-            
+
             <button
               onClick={closeLightbox}
               className="p-3 rounded-full border border-zinc-800 bg-zinc-950/80 hover:bg-red-600 hover:text-white transition-all duration-300 cursor-pointer"
@@ -292,7 +362,7 @@ export default function Gallery() {
           </button>
 
           {/* Main Image Viewport */}
-          <div 
+          <div
             className="relative max-w-5xl w-full h-[60vh] md:h-[75vh] flex items-center justify-center z-50"
             onClick={(e) => e.stopPropagation()} // Prevent closing when clicking image
           >

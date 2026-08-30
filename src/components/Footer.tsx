@@ -2,22 +2,28 @@
 
 import React from "react";
 import Image from "next/image";
-import { Instagram, Phone, MessageCircle } from "lucide-react";
-import confetti from "canvas-confetti";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { Instagram, MessageCircle } from "lucide-react";
 
 export default function Footer() {
-
+  const pathname = usePathname();
 
   const handleScrollTo = (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
-    e.preventDefault();
-    const element = document.querySelector(id);
-    if (element) {
-      const offset = 80;
-      const bodyRect = document.body.getBoundingClientRect().top;
-      const elementRect = element.getBoundingClientRect().top;
-      const elementPosition = elementRect - bodyRect;
-      const offsetPosition = elementPosition - offset;
-      window.scrollTo({ top: offsetPosition, behavior: "smooth" });
+    if (id.startsWith("/#") || id.startsWith("#")) {
+      const hash = id.includes("#") ? "#" + id.split("#")[1] : id;
+      if (pathname === "/") {
+        e.preventDefault();
+        const element = document.querySelector(hash);
+        if (element) {
+          const offset = 80;
+          const bodyRect = document.body.getBoundingClientRect().top;
+          const elementRect = element.getBoundingClientRect().top;
+          const elementPosition = elementRect - bodyRect;
+          const offsetPosition = elementPosition - offset;
+          window.scrollTo({ top: offsetPosition, behavior: "smooth" });
+        }
+      }
     }
   };
 
@@ -34,7 +40,7 @@ export default function Footer() {
           
           {/* Col 1: Brand & Newsletter (4 Columns) */}
           <div className="lg:col-span-4 space-y-6">
-            <a href="#home" onClick={(e) => handleScrollTo(e, "#home")} className="flex items-center gap-3 group">
+            <Link href="/#home" scroll={false} onClick={(e: React.MouseEvent<HTMLAnchorElement>) => handleScrollTo(e, "/#home")} className="flex items-center gap-3 group">
               <div className="relative w-9 h-9 transition-transform duration-500 group-hover:rotate-12">
                 <Image
                   src="/assets/logo_transparent.png"
@@ -47,7 +53,7 @@ export default function Footer() {
               <span className="font-sans text-base font-black tracking-[0.25em] text-zinc-100">
                 BLACKHOLE
               </span>
-            </a>
+            </Link>
 
             <p className="font-sans text-xs font-light leading-relaxed text-zinc-500 max-w-xs">
               A bespoke contemporary tattoo collective delivering high-end custom body illustration, clinical precision, and luxury hospitality in Kottayam, Kerala.
@@ -63,21 +69,22 @@ export default function Footer() {
             </h4>
             <ul className="space-y-2.5 text-xs font-light">
               {[
-                { label: "Home", href: "#home" },
-                { label: "Gallery", href: "#gallery" },
-                { label: "Services", href: "#services" },
-                { label: "Why Us", href: "#why-us" },
-                { label: "Booking", href: "#booking" },
-                { label: "Contact", href: "#contact" },
+                { label: "Home", href: "/#home" },
+                { label: "Gallery", href: "/#gallery" },
+                { label: "Services", href: "/#services" },
+                { label: "Why Us", href: "/#why-us" },
+                { label: "Booking", href: "/#booking" },
+                { label: "Contact", href: "/#contact" },
               ].map((link) => (
                 <li key={link.label}>
-                  <a
+                  <Link
                     href={link.href}
-                    onClick={(e) => handleScrollTo(e, link.href)}
+                    scroll={false}
+                    onClick={(e: React.MouseEvent<HTMLAnchorElement>) => handleScrollTo(e, link.href)}
                     className="hover:text-gold-accent transition-colors duration-300"
                   >
                     {link.label}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>
@@ -90,24 +97,24 @@ export default function Footer() {
             </h4>
             <ul className="space-y-2.5 text-xs font-light">
               <li>
-                <a href="#services" onClick={(e) => handleScrollTo(e, "#services")} className="hover:text-gold-accent transition-colors duration-300">
+                <Link href="/#services" scroll={false} onClick={(e: React.MouseEvent<HTMLAnchorElement>) => handleScrollTo(e, "/#services")} className="hover:text-gold-accent transition-colors duration-300">
                   Custom Tattooing
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#services" onClick={(e) => handleScrollTo(e, "#services")} className="hover:text-gold-accent transition-colors duration-300">
+                <Link href="/#services" scroll={false} onClick={(e: React.MouseEvent<HTMLAnchorElement>) => handleScrollTo(e, "/#services")} className="hover:text-gold-accent transition-colors duration-300">
                   Precision Piercing
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#booking" onClick={(e) => handleScrollTo(e, "#booking")} className="hover:text-gold-accent transition-colors duration-300">
-                  Curated Ear Styling
-                </a>
+                <Link href="/#booking" scroll={false} onClick={(e: React.MouseEvent<HTMLAnchorElement>) => handleScrollTo(e, "/#booking")} className="hover:text-gold-accent transition-colors duration-300">
+                  Book Consultation
+                </Link>
               </li>
               <li>
-                <a href="#booking" onClick={(e) => handleScrollTo(e, "#booking")} className="hover:text-gold-accent transition-colors duration-300">
+                <Link href="/#booking" scroll={false} onClick={(e: React.MouseEvent<HTMLAnchorElement>) => handleScrollTo(e, "/#booking")} className="hover:text-gold-accent transition-colors duration-300">
                   Creative Design Consults
-                </a>
+                </Link>
               </li>
             </ul>
           </div>
@@ -120,8 +127,8 @@ export default function Footer() {
             <ul className="space-y-3 text-xs font-light">
               <li>
                 <span className="block text-[9px] font-bold tracking-widest text-zinc-600 uppercase mb-0.5">Phone Line</span>
-                <a href="tel:+916235456525" className="text-zinc-300 hover:text-gold-accent transition-colors">
-                  +91 62354 56525
+                <a href="tel:+919746695575" className="text-zinc-300 hover:text-gold-accent transition-colors">
+                  +91 97466 95575
                 </a>
               </li>
               <li>

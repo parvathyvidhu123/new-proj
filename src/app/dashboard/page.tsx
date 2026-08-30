@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
+import Link from "next/link";
 import { 
   Users, 
   Phone, 
@@ -102,9 +103,10 @@ export default function Dashboard() {
         pendingInquiries: inquiriesData.filter((i: Inquiry) => i.status === "Pending").length,
       });
 
-    } catch (err: any) {
-      console.error(err);
-      setError(err.message || "An error occurred while fetching dashboard entries.");
+    } catch (err) {
+      const errorObj = err as Error;
+      console.error(errorObj);
+      setError(errorObj.message || "An error occurred while fetching dashboard entries.");
     } finally {
       setLoading(false);
       setRefreshing(false);
@@ -112,7 +114,9 @@ export default function Dashboard() {
   };
 
   useEffect(() => {
-    fetchData();
+    setTimeout(() => {
+      fetchData();
+    }, 0);
   }, []);
 
   const handleUpdateStatus = async (type: "booking" | "inquiry", id: string, newStatus: string) => {
@@ -145,8 +149,8 @@ export default function Dashboard() {
           };
         });
       }
-    } catch (err: any) {
-      alert(err.message || "Failed to update status.");
+    } catch (err) {
+      alert((err as Error).message || "Failed to update status.");
     }
   };
 
@@ -174,8 +178,8 @@ export default function Dashboard() {
           pendingInquiries: inquiries.filter(i => i.id !== id && i.status === "Pending").length
         }));
       }
-    } catch (err: any) {
-      alert(err.message || "Deletion failed.");
+    } catch (err) {
+      alert((err as Error).message || "Deletion failed.");
     }
   };
 
@@ -185,8 +189,8 @@ export default function Dashboard() {
       const response = await fetch("/api/whatsapp-logs", { method: "DELETE" });
       if (!response.ok) throw new Error("Failed to clear logs.");
       setWhatsappLogs([]);
-    } catch (err: any) {
-      alert(err.message);
+    } catch (err) {
+      alert((err as Error).message);
     }
   };
 
@@ -222,12 +226,12 @@ export default function Dashboard() {
             <RefreshCw size={14} className={refreshing ? "animate-spin" : ""} />
             {refreshing ? "REFRESHING" : "REFRESH"}
           </button>
-          <a
+          <Link
             href="/"
             className="px-4 py-2.5 rounded-lg bg-zinc-900 hover:bg-zinc-800 text-xs font-bold uppercase tracking-wider transition-all"
           >
             Visit Studio Website
-          </a>
+          </Link>
         </div>
       </header>
 

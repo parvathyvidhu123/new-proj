@@ -101,7 +101,7 @@ export default function Testimonials() {
 
               {/* Review Quote */}
               <p className="font-serif text-lg md:text-2xl font-light italic text-zinc-700 dark:text-zinc-200 leading-relaxed mb-8 md:mb-12">
-                "{testimonials[activeIndex].quote}"
+                &ldquo;{testimonials[activeIndex].quote}&rdquo;
               </p>
             </div>
 
