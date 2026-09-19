@@ -56,7 +56,7 @@ export default function Footer() {
             </Link>
 
             <p className="font-sans text-xs font-light leading-relaxed text-zinc-500 max-w-xs">
-              A bespoke contemporary tattoo collective delivering high-end custom body illustration, clinical precision, and luxury hospitality in Kottayam, Kerala.
+              A bespoke contemporary tattoo studio delivering high-end custom body illustration, clinical precision, and luxury hospitality in Kottayam, Kerala.
             </p>
 
 
@@ -144,7 +144,7 @@ export default function Footer() {
                     <Instagram size={16} />
                   </a>
                   <a
-                    href="https://api.whatsapp.com/send?phone=916235456525"
+                    href="https://api.whatsapp.com/send?phone=919746695575"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-zinc-500 hover:text-green-500 transition-colors"
@@ -169,7 +169,7 @@ export default function Footer() {
         {/* Bottom copyright metadata */}
         <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-8 border-t border-zinc-900/50 text-[10px] tracking-widest text-zinc-600 uppercase font-bold">
           <div>
-            © {new Date().getFullYear()} BLACKHOLE TATTOO COLLECTIVE. ALL RIGHTS RESERVED.
+            © {new Date().getFullYear()} BLACKHOLE TATTOOS. ALL RIGHTS RESERVED.
           </div>
           
           <div className="text-[9px] tracking-widest text-zinc-500 uppercase font-bold">

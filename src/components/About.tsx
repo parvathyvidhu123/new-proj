@@ -77,20 +77,21 @@ export default function About() {
           {/* Film Grain overlay specific to this image */}
           <div className="absolute inset-0 bg-black/10 z-10 pointer-events-none group-hover:bg-transparent transition-colors duration-500" />
           
-          <div className="relative aspect-[3/4] w-full h-[500px] md:h-[600px] overflow-hidden">
+          <div className="relative aspect-[4/5] w-full h-[520px] md:h-[640px] overflow-hidden">
             <Image
-              src="/assets/about_craftsmanship.webp"
-              alt="Artistic Craftsmanship at BLACKHOLE"
+              src="/assets/digital_artistry_consultation_hd.jpg"
+              alt="Digital Artistry & Consultation at BLACKHOLE"
               fill
+              quality={95}
               sizes="(max-width: 1024px) 100vw, 50vw"
-              className="object-cover transition-transform duration-1000 ease-out group-hover:scale-105"
+              className="object-cover object-[center_88%] transition-transform duration-1000 ease-out group-hover:scale-105"
               priority
             />
           </div>
 
-          {/* Hanging Tag */}
-          <div className="absolute bottom-6 left-6 z-20 glass px-5 py-3 rounded-md border border-white/5">
-            <p className="font-serif text-sm italic text-zinc-300">&ldquo;Art is in the details, trust is in the hygiene.&rdquo;</p>
+          {/* Hanging Tag - moved to top so it never obstructs the iPad illustration */}
+          <div className="absolute top-6 left-6 z-20 glass px-5 py-3 rounded-md border border-white/10 shadow-lg backdrop-blur-md">
+            <p className="font-serif text-xs md:text-sm italic text-zinc-200">&ldquo;Art is in the details, trust is in the hygiene.&rdquo;</p>
           </div>
         </div>
 

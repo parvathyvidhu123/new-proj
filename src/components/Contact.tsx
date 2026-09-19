@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import { Phone, MessageCircle, Instagram, MapPin, Clock, Star, Send, CheckCircle2, Navigation, AlertCircle, ChevronDown } from "lucide-react";
+import { Phone, MessageCircle, Instagram, MapPin, Clock, Send, CheckCircle2, Navigation, AlertCircle, ChevronDown } from "lucide-react";
 import confetti from "canvas-confetti";
 
 type ContactFormData = {
@@ -28,8 +28,8 @@ export default function Contact() {
   const onSubmit = async (data: ContactFormData) => {
     setIsSubmitting(true);
     setSubmitError(null);
-    try {
-      const serviceLabel = data.service === "tattoo" 
+
+    const serviceLabel = data.service === "tattoo" 
         ? "Custom Tattooing" 
         : data.service === "piercing" 
         ? "Precision Piercing" 
@@ -38,7 +38,8 @@ export default function Contact() {
         : "General Consultation / Enquiry";
 
       // 1. Submit to local SQLite database via API
-      const response = await fetch("/api/inquiries", {
+      try {
+        const response = await fetch("/api/inquiries", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -52,62 +53,50 @@ export default function Contact() {
       });
 
       if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.error || "Failed to send message.");
+        const errorData = await response.json().catch(() => ({}));
+        console.warn("API returned non-200, proceeding with direct WhatsApp transmission:", errorData);
       }
-
-      // 2. Format and redirect to WhatsApp
-      let messageText = `*BLACKHOLE TATTOO STUDIO - GENERAL ENQUIRY*\n\n`;
-      messageText += `👤 *Name:* ${data.name}\n`;
-      messageText += `📞 *Phone:* ${data.phone}\n`;
-      messageText += `📧 *Email:* ${data.email}\n`;
-      messageText += `✨ *Service Interested In:* ${serviceLabel}\n`;
-      messageText += `📝 *Message:* ${data.message}\n`;
-      
-      const encodedMessage = encodeURIComponent(messageText);
-      const whatsappUrl = `https://api.whatsapp.com/send?phone=916235456525&text=${encodedMessage}`;
-      
-      window.open(whatsappUrl, "_blank");
-
-      // 3. Success feedback
-      setSubmitted(true);
-      
-      confetti({
-        particleCount: 50,
-        spread: 60,
-        origin: { y: 0.8 },
-        colors: ["#bf0a0a", "#ffffff"],
-      });
-
-      setTimeout(() => {
-        reset();
-      }, 1000);
-
     } catch (err) {
-      const errorObj = err as Error;
-      console.error("Contact error:", errorObj);
-      setSubmitError(errorObj.message || "An unexpected error occurred. Please try again.");
-    } finally {
-      setIsSubmitting(false);
+      console.warn("Local API call failed, continuing with WhatsApp direct connect:", err);
     }
+
+    // 2. Format and redirect to WhatsApp
+    let messageText = `*BLACKHOLE TATTOO STUDIO - GENERAL ENQUIRY*\n\n`;
+    messageText += `👤 *Name:* ${data.name}\n`;
+    messageText += `📞 *Phone:* ${data.phone}\n`;
+    messageText += `📧 *Email:* ${data.email}\n`;
+    messageText += `✨ *Service Interested In:* ${serviceLabel}\n`;
+    messageText += `📝 *Message:* ${data.message}\n`;
+    
+    const encodedMessage = encodeURIComponent(messageText);
+    const whatsappUrl = `https://api.whatsapp.com/send?phone=919746695575&text=${encodedMessage}`;
+    
+    try {
+      window.open(whatsappUrl, "_blank");
+    } catch (popErr) {
+      console.log("Popup blocked", popErr);
+    }
+
+    // 3. Success feedback
+    setSubmitted(true);
+    
+    confetti({
+      particleCount: 50,
+      spread: 60,
+      origin: { y: 0.8 },
+      colors: ["#bf0a0a", "#ffffff"],
+    });
+
+    setTimeout(() => {
+      reset();
+    }, 1000);
+
+    setIsSubmitting(false);
   };
 
   const businessHours = [
-    { days: "Tuesday – Sunday", hours: "10:30 AM – 08:00 PM" },
-    { days: "Monday", hours: "By Prior Appointment" },
-  ];
-
-  const reviewHighlights = [
-    {
-      author: "Adarsh K. Nair",
-      text: "Absolutely professional work! Visited their new studio in Kalathipady. The detailing and line precision are top-notch. Highly recommend for custom tattoo designs in Kottayam.",
-      stars: 5,
-    },
-    {
-      author: "Meera Joseph",
-      text: "Super hygienic and clinical sterilization standards. The artist patiently discussed my custom concept and executed it flawlessly. Best tattoo experience in Kerala!",
-      stars: 5,
-    },
+    { days: "Monday – Saturday", hours: "11:00 AM – 07:30 PM" },
+    { days: "Sunday", hours: "12:00 PM – 07:30 PM" },
   ];
 
   return (
@@ -143,10 +132,9 @@ export default function Contact() {
                   <MapPin size={14} className="text-gold-accent" /> Studio Location
                 </h3>
                 <p className="font-sans text-sm font-light text-zinc-300 leading-relaxed">
-                  <strong className="font-bold">BLACKHOLE TATTOOS</strong> <br />
-                  Kottayam - Kumily Rd, <br />
-                  Grand Opera Building, Near KSRTC Terminal, Kottayam, <br />
-                  Kerala - 686001
+                  <strong className="font-bold">BLACKHOLE TATTOOS & PIERCING</strong> <br />
+                  Kottayam - Kumily Rd, Kalathipady, <br />
+                  Kottayam, Kerala 686010
                 </p>
               </div>
 
@@ -169,7 +157,7 @@ export default function Contact() {
             {/* Direct Connect Buttons */}
             <div className="flex flex-wrap items-center gap-4 pt-4">
               <a
-                href="https://api.whatsapp.com/send?phone=916235456525"
+                href="https://api.whatsapp.com/send?phone=919746695575"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="px-6 py-3 rounded-lg bg-green-950/20 hover:bg-green-600 border border-green-800 text-white font-sans text-xs font-bold tracking-widest uppercase flex items-center gap-2 transition-all duration-300"
@@ -196,7 +184,7 @@ export default function Contact() {
             <div className="relative rounded-xl overflow-hidden border border-zinc-800/80 aspect-video w-full h-[250px] shadow-2xl group">
               <iframe
                 title="BLACKHOLE Tattoos Kottayam Location Map"
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3931.332306232757!2d76.5204683!3d9.5923984!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3b062b0051d98993%3A0xe543fa0dfde94539!2sBLACK%20HOLE%20TATTOOS%20%26%20PIERCING%20KOTTAYAM!5e0!3m2!1sen!2sin!4v1719391200000!5m2!1sen!2sin"
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3934.0794532265004!2d76.5507241!3d9.588419799999999!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3b062bedcbb769df%3A0xe23ae1013966882f!2sBlackhole%20Tattoos%20%7C%20Kottayam!5e0!3m2!1sen!2sin!4v1789759070725!5m2!1sen!2sin"
                 className="w-full h-full border-none transition-all duration-700 filter invert-[90%] hue-rotate-[180deg] brightness-[85%] contrast-[95%] dark:invert-[90%] dark:hue-rotate-[180deg] dark:brightness-[85%] group-hover:filter-none"
                 loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"
@@ -204,7 +192,7 @@ export default function Contact() {
               
               {/* Floating Directions Button */}
               <a
-                href="https://maps.google.com/?q=BLACK+HOLE+TATTOOS+%26+PIERCING+KOTTAYAM"
+                href="https://maps.google.com/?cid=16301648057279318063"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="absolute bottom-4 right-4 z-10 glass px-4 py-2 rounded-lg border border-white/10 flex items-center gap-2 text-xs font-bold tracking-widest uppercase text-zinc-200 hover:bg-gold-accent hover:text-white hover:border-gold-accent transition-all duration-300 shadow-lg"
@@ -212,47 +200,6 @@ export default function Contact() {
               >
                 <Navigation size={12} /> Directions
               </a>
-            </div>
-
-            {/* Google Business Profile Reviews Highlight */}
-            <div className="glass-premium bg-white/90 dark:bg-zinc-900/90 p-6 rounded-xl border border-zinc-200 dark:border-zinc-800/60 shadow-lg">
-              <div className="flex items-center justify-between border-b border-zinc-200 dark:border-zinc-800/40 pb-4 mb-4">
-                <div>
-                  <h4 className="font-sans text-xs font-bold tracking-widest text-zinc-700 dark:text-zinc-300 uppercase">
-                    Google Business Profile
-                  </h4>
-                  <div className="flex items-center gap-1.5 mt-1">
-                    <span className="text-sm font-bold font-mono text-zinc-900 dark:text-zinc-100">4.9</span>
-                    <div className="flex items-center text-gold-accent">
-                      {Array.from({ length: 5 }).map((_, i) => (
-                        <Star key={i} size={12} className="fill-gold-accent" />
-                      ))}
-                    </div>
-                    <span className="text-[10px] text-zinc-500">(142+ Reviews)</span>
-                  </div>
-                </div>
-                
-                <a
-                  href="https://www.google.com/maps/place/BLACK+HOLE+TATTOOS+%26+PIERCING+KOTTAYAM/@9.5923984,76.5204683,17z"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-[10px] font-bold tracking-widest text-gold-accent hover:text-red-400 uppercase underline"
-                >
-                  Write Review
-                </a>
-              </div>
-
-              {/* Review Snippets Carousel */}
-              <div className="space-y-4">
-                {reviewHighlights.map((rev, i) => (
-                  <div key={i} className="text-xs font-light leading-relaxed text-zinc-650 dark:text-zinc-400 pl-4 border-l border-red-600/30">
-                    <p className="italic">&ldquo;{rev.text}&rdquo;</p>
-                    <span className="block mt-1 font-bold text-zinc-500 dark:text-zinc-400 uppercase tracking-wider text-[9px]">
-                      — {rev.author}
-                    </span>
-                  </div>
-                ))}
-              </div>
             </div>
 
           </div>

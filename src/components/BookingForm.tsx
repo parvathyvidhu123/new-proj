@@ -22,6 +22,8 @@ export default function BookingForm() {
   const [submitted, setSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
+  const [lastWhatsappUrl, setLastWhatsappUrl] = useState<string>("");
+  const [lastBookingData, setLastBookingData] = useState<FormData | null>(null);
 
   const {
     register,
@@ -35,7 +37,7 @@ export default function BookingForm() {
       style: "fine-line",
       placement: "forearm",
       size: "medium",
-      time: "11:00",
+      time: "11:00 AM",
     },
   });
 
@@ -63,6 +65,75 @@ export default function BookingForm() {
   const onSubmit = async (data: FormData) => {
     setIsSubmitting(true);
     setSubmitError(null);
+
+    const getServiceLabel = (val: string) => {
+      switch (val) {
+        case "tattoo": return "Custom Tattooing";
+        case "piercing": return "Precision Piercing";
+        case "microblading": return "Microblading Brow Styling";
+        default: return val;
+      }
+    };
+    const getStyleLabel = (val: string) => {
+      switch (val) {
+        case "fine-line": return "Fine Line / Micro-realism";
+        case "realism": return "Shaded Realism";
+        case "biomech": return "Bio-Mechanical / Heavy Ink";
+        case "traditional": return "Traditional / Neo-Trad";
+        case "tribal": return "Tribal / Blackwork";
+        case "geometry": return "Geometric / Mandala";
+        case "other": return "Other / Custom Concept";
+        default: return val;
+      }
+    };
+    const getPlacementLabel = (val: string) => {
+      switch (val) {
+        case "forearm": return "Forearm";
+        case "upper-arm": return "Upper Arm / Shoulder";
+        case "sleeve": return "Full Arm Sleeve";
+        case "chest-back": return "Chest / Back";
+        case "leg-calf": return "Leg / Calf / Thigh";
+        case "neck-nape": return "Neck / Nape";
+        case "hand-wrist": return "Hand / Wrist";
+        case "other": return "Other";
+        default: return val;
+      }
+    };
+    const getSizeLabel = (val: string) => {
+      switch (val) {
+        case "small": return "Small (under 3 inches)";
+        case "medium": return "Medium (3 - 6 inches)";
+        case "large": return "Large (6 - 10 inches)";
+        case "sleeve-project": return "Multi-session / Large Scale";
+        default: return val;
+      }
+    };
+
+    const serviceLabel = getServiceLabel(data.service);
+    let message = `*BLACKHOLE TATTOO STUDIO - BOOKING REQUEST*\n\n`;
+    message += `👤 *Client:* ${data.name}\n`;
+    message += `📞 *Phone:* ${data.phone}\n`;
+    message += `📧 *Email:* ${data.email}\n`;
+    message += `✨ *Service:* ${serviceLabel}\n`;
+    
+    if (data.service === "tattoo") {
+      message += `🎨 *Style:* ${getStyleLabel(data.style)}\n`;
+      message += `📍 *Placement:* ${getPlacementLabel(data.placement)}\n`;
+      message += `📐 *Size:* ${getSizeLabel(data.size)}\n`;
+    }
+    
+    message += `📅 *Preferred Date:* ${data.date}\n`;
+    message += `⏰ *Preferred Time Slot:* ${data.time}\n`;
+    
+    if (data.notes) {
+      message += `📝 *Project Brief:* ${data.notes}\n`;
+    }
+    
+    const encodedMessage = encodeURIComponent(message);
+    const whatsappUrl = `https://api.whatsapp.com/send?phone=919746695575&text=${encodedMessage}`;
+    setLastWhatsappUrl(whatsappUrl);
+    setLastBookingData(data);
+
     try {
       // 1. Post record to SQLite database via local API
       const response = await fetch("/api/bookings", {
@@ -74,89 +145,29 @@ export default function BookingForm() {
       });
 
       if (!response.ok) {
-        const errJson = await response.json();
-        throw new Error(errJson.error || "Failed to submit booking inquiry.");
+        const errJson = await response.json().catch(() => ({}));
+        console.warn("API returned non-200, continuing with WhatsApp lead:", errJson);
       }
-
-      // 2. Format and open WhatsApp message matching the friend's configuration
-      const getServiceLabel = (val: string) => {
-        switch (val) {
-          case "tattoo": return "Custom Tattooing";
-          case "piercing": return "Precision Piercing";
-          case "microblading": return "Microblading Brow Styling";
-          default: return val;
-        }
-      };
-      const getStyleLabel = (val: string) => {
-        switch (val) {
-          case "fine-line": return "Fine Line / Micro-realism";
-          case "realism": return "Shaded Realism";
-          case "biomech": return "Bio-Mechanical / Heavy Ink";
-          case "traditional": return "Traditional / Neo-Trad";
-          case "tribal": return "Tribal / Blackwork";
-          case "geometry": return "Geometric / Mandala";
-          case "other": return "Other / Custom Concept";
-          default: return val;
-        }
-      };
-      const getPlacementLabel = (val: string) => {
-        switch (val) {
-          case "forearm": return "Forearm";
-          case "upper-arm": return "Upper Arm / Shoulder";
-          case "sleeve": return "Full Arm Sleeve";
-          case "chest-back": return "Chest / Back";
-          case "leg-calf": return "Leg / Calf / Thigh";
-          case "neck-nape": return "Neck / Nape";
-          case "hand-wrist": return "Hand / Wrist";
-          case "other": return "Other";
-          default: return val;
-        }
-      };
-      const getSizeLabel = (val: string) => {
-        switch (val) {
-          case "small": return "Small (under 3 inches)";
-          case "medium": return "Medium (3 - 6 inches)";
-          case "large": return "Large (6 - 10 inches)";
-          case "sleeve-project": return "Multi-session / Large Scale";
-          default: return val;
-        }
-      };
-
-      const serviceLabel = getServiceLabel(data.service);
-      let message = `*BLACKHOLE TATTOO STUDIO - BOOKING REQUEST*\n\n`;
-      message += `👤 *Client:* ${data.name}\n`;
-      message += `📞 *Phone:* ${data.phone}\n`;
-      message += `📧 *Email:* ${data.email}\n`;
-      message += `✨ *Service:* ${serviceLabel}\n`;
-      
-      if (data.service === "tattoo") {
-        message += `🎨 *Style:* ${getStyleLabel(data.style)}\n`;
-        message += `📍 *Placement:* ${getPlacementLabel(data.placement)}\n`;
-        message += `📐 *Size:* ${getSizeLabel(data.size)}\n`;
-      }
-      
-      message += `📅 *Preferred Date:* ${data.date}\n`;
-      message += `⏰ *Preferred Time Slot:* ${data.time}\n`;
-      
-      if (data.notes) {
-        message += `📝 *Project Brief:* ${data.notes}\n`;
-      }
-      
-      const encodedMessage = encodeURIComponent(message);
-      const whatsappUrl = `https://api.whatsapp.com/send?phone=916235456525&text=${encodedMessage}`;
-      
-      window.open(whatsappUrl, "_blank");
-
-      // 3. Trigger success animation and state reset
-      setSubmitted(true);
-      triggerConfetti();
-      reset();
     } catch (err) {
-      const errorObj = err as Error;
-      console.error("Booking error:", errorObj);
-      setSubmitError(errorObj.message || "Something went wrong. Please try again.");
+      console.warn("Local API call failed or offline, saving to localStorage:", err);
+      try {
+        const saved = JSON.parse(localStorage.getItem("blackhole_bookings") || "[]");
+        saved.push({ ...data, savedAt: new Date().toISOString() });
+        localStorage.setItem("blackhole_bookings", JSON.stringify(saved));
+      } catch (localErr) {
+        console.error("Storage error:", localErr);
+      }
     } finally {
       setIsSubmitting(false);
+      setSubmitted(true);
+      triggerConfetti();
+
+      // Attempt to open WhatsApp directly
+      try {
+        window.open(whatsappUrl, "_blank");
+      } catch (popErr) {
+        console.log("Popup blocked, user can click direct WhatsApp button on screen", popErr);
+      }
     }
   };
 
@@ -180,6 +191,10 @@ export default function BookingForm() {
           <p className="mt-4 font-sans text-zinc-600 dark:text-zinc-400 font-light max-w-lg mx-auto">
             Ready to immortalize your vision? Fill out our luxury briefing form. We will match you with the artist best suited for your project.
           </p>
+          <div className="mt-3 inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-zinc-100 dark:bg-zinc-900 border border-zinc-300 dark:border-zinc-800 text-[11px] font-mono text-zinc-600 dark:text-zinc-400">
+            <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
+            <span>Studio Open: Mon–Sat 11:00 AM – 7:30 PM • Sun 12:00 PM – 7:30 PM</span>
+          </div>
         </div>
 
         {/* Form Box */}
@@ -187,19 +202,55 @@ export default function BookingForm() {
           
           {submitted ? (
             /* Elegant Success Animation */
-            <div className="flex flex-col items-center justify-center text-center py-12 animate-fade-in">
-              <div className="w-20 h-20 rounded-full bg-red-950/35 border border-red-500/30 flex items-center justify-center text-red-500 mb-8 shadow-[0_0_25px_rgba(191,10,10,0.2)] animate-bounce">
+            <div className="flex flex-col items-center justify-center text-center py-10 animate-fade-in">
+              <div className="w-20 h-20 rounded-full bg-green-950/35 border border-green-500/30 flex items-center justify-center text-green-500 mb-6 shadow-[0_0_25px_rgba(34,197,94,0.25)] animate-bounce">
                 <CheckCircle2 size={40} />
               </div>
-              <h3 className="font-display text-3xl font-black uppercase text-zinc-900 dark:text-zinc-100 tracking-tight mb-4">
+              <h3 className="font-display text-3xl font-black uppercase text-zinc-900 dark:text-zinc-100 tracking-tight mb-2">
                 CONSULTATION SECURED
               </h3>
-              <p className="font-sans text-sm font-light text-zinc-600 dark:text-zinc-400 max-w-md leading-relaxed mb-8">
-                Your briefing file has been submitted. Our Creative Director is reviewing your request. A styling consultant will reach out via WhatsApp (+91 97466 95575) within 24 hours to confirm your scheduling options.
+              <p className="font-sans text-sm font-light text-zinc-600 dark:text-zinc-400 max-w-md leading-relaxed mb-6">
+                Your briefing file has been received! Our Creative Director and styling team will review your project details.
               </p>
+
+              {lastBookingData && (
+                <div className="w-full max-w-md bg-zinc-100 dark:bg-zinc-950/80 rounded-xl p-4 border border-zinc-200 dark:border-zinc-800/80 text-left text-xs space-y-1.5 mb-8">
+                  <div className="flex justify-between pb-1.5 border-b border-zinc-200 dark:border-zinc-800">
+                    <span className="text-zinc-500">Client:</span>
+                    <span className="font-bold text-zinc-900 dark:text-zinc-100">{lastBookingData.name}</span>
+                  </div>
+                  <div className="flex justify-between pb-1.5 border-b border-zinc-200 dark:border-zinc-800">
+                    <span className="text-zinc-500">Service:</span>
+                    <span className="font-bold text-gold-accent capitalize">{lastBookingData.service}</span>
+                  </div>
+                  <div className="flex justify-between pb-1.5 border-b border-zinc-200 dark:border-zinc-800">
+                    <span className="text-zinc-500">Preferred Slot:</span>
+                    <span className="font-bold text-zinc-900 dark:text-zinc-100">{lastBookingData.date} at {lastBookingData.time}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-zinc-500">Contact:</span>
+                    <span className="font-mono text-zinc-900 dark:text-zinc-100">{lastBookingData.phone}</span>
+                  </div>
+                </div>
+              )}
+
+              {/* Direct WhatsApp Action Button */}
+              <a
+                href={lastWhatsappUrl || `https://api.whatsapp.com/send?phone=919746695575`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full max-w-md py-4 px-6 mb-4 text-xs font-black tracking-[0.2em] bg-[#25D366] hover:bg-[#20ba59] text-black uppercase rounded-xl transition-all duration-300 shadow-[0_4px_25px_rgba(37,211,102,0.3)] flex items-center justify-center gap-3 cursor-pointer group hover:scale-[1.02]"
+              >
+                <span className="font-extrabold text-sm">💬</span>
+                <span>OPEN WHATSAPP CHAT TO CONFIRM (+91 97466 95575)</span>
+              </a>
+
               <button
-                onClick={() => setSubmitted(false)}
-                className="px-8 py-3 text-xs font-bold tracking-widest text-zinc-750 dark:text-zinc-300 border border-zinc-250 dark:border-zinc-700 hover:border-red-600 hover:text-white rounded-full uppercase transition-all duration-300 bg-transparent cursor-pointer"
+                onClick={() => {
+                  setSubmitted(false);
+                  reset();
+                }}
+                className="px-8 py-3 text-xs font-bold tracking-widest text-zinc-700 dark:text-zinc-300 border border-zinc-300 dark:border-zinc-700 hover:border-gold-accent hover:text-gold-accent rounded-full uppercase transition-all duration-300 bg-transparent cursor-pointer"
               >
                 Book Another Session
               </button>
@@ -241,11 +292,11 @@ export default function BookingForm() {
                     <input
                       id="phone"
                       type="tel"
-                      placeholder="e.g. +91 98765 43210"
+                      placeholder="e.g. +91 97466 95575"
                       {...register("phone", {
                         required: "Phone number is required",
                         pattern: {
-                          value: /^\+?[0-9\s\-()]{10,15}$/,
+                          value: /^\+?[0-9\s\-()]{7,18}$/,
                           message: "Please enter a valid phone number",
                         },
                       })}
@@ -267,7 +318,7 @@ export default function BookingForm() {
                   <input
                     id="email"
                     type="email"
-                    placeholder="e.g. adithya@example.com"
+                    placeholder="e.g. client@example.com"
                     {...register("email", {
                       required: "Email is required",
                       pattern: {
@@ -287,10 +338,16 @@ export default function BookingForm() {
 
               {/* SECTION 2: Project Specifications */}
               <div className="space-y-6">
-                <h3 className="font-display text-xs font-bold tracking-[0.25em] text-gold-accent uppercase pb-2 border-b border-zinc-200 dark:border-zinc-800/60">
-                  SECTION 2 <span className="text-red-500">{"//"}</span> PROJECT SPECIFICATIONS
-                </h3>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="flex flex-wrap items-center justify-between pb-2 border-b border-zinc-200 dark:border-zinc-800/60 gap-2">
+                  <h3 className="font-display text-xs font-bold tracking-[0.25em] text-gold-accent uppercase">
+                    SECTION 2 <span className="text-red-500">{"//"}</span> PROJECT SPECIFICATIONS
+                  </h3>
+                  <span className="text-[10px] text-zinc-500 font-mono">
+                    Open Mon–Sat 11:00 AM–7:30 PM • Sun 12:00 PM–7:30 PM
+                  </span>
+                </div>
+                
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                   {/* Service */}
                   <div className="flex flex-col gap-2">
                     <label htmlFor="service" className="text-[10px] font-bold tracking-widest text-zinc-500 dark:text-zinc-400 uppercase">
@@ -331,6 +388,30 @@ export default function BookingForm() {
                         <AlertCircle size={10} /> {errors.date.message}
                       </span>
                     )}
+                  </div>
+
+                  {/* Time Slot Selection */}
+                  <div className="flex flex-col gap-2">
+                    <label htmlFor="time" className="text-[10px] font-bold tracking-widest text-zinc-500 dark:text-zinc-400 uppercase">
+                      Preferred Time Slot *
+                    </label>
+                    <div className="relative">
+                      <select
+                        id="time"
+                        {...register("time")}
+                        className="w-full px-5 py-3.5 pr-10 rounded-lg bg-white dark:bg-zinc-950/60 border border-zinc-200 dark:border-zinc-800 text-zinc-850 dark:text-zinc-200 focus:outline-none focus:border-gold-accent font-sans text-sm transition-all appearance-none cursor-pointer"
+                      >
+                        <option value="11:00 AM">11:00 AM (Morning Slot)</option>
+                        <option value="12:30 PM">12:30 PM (Midday Slot)</option>
+                        <option value="02:00 PM">02:00 PM (Afternoon Slot)</option>
+                        <option value="03:30 PM">03:30 PM (Afternoon Slot)</option>
+                        <option value="05:00 PM">05:00 PM (Evening Slot)</option>
+                        <option value="06:30 PM">06:30 PM (Sunset / Late Slot)</option>
+                      </select>
+                      <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-zinc-400 dark:text-zinc-600">
+                        <ChevronDown size={16} />
+                      </div>
+                    </div>
                   </div>
                 </div>
 

@@ -26,7 +26,7 @@ export default function FloatingMenu() {
     {
       icon: <MessageCircle size={18} />,
       label: "WhatsApp",
-      href: "https://api.whatsapp.com/send?phone=916235456525",
+      href: "https://api.whatsapp.com/send?phone=919746695575",
       color: "bg-green-600 hover:bg-green-700 text-white shadow-green-900/40",
       cursorText: "Chat",
     },

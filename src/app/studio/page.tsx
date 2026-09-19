@@ -230,10 +230,10 @@ const SkeletonEight = () => (
       Kottayam Overview
     </p>
     <p className="font-bold text-xs text-gold-accent tracking-widest uppercase mb-4">
-      Opera House Location
+      Kalathipady Studio
     </p>
     <p className="font-sans font-normal text-sm text-neutral-300 leading-relaxed max-w-xl">
-      Located on the second floor of the Grand Opera Building. The massive glass windows look out directly onto the busy street, filling the studio with gorgeous natural light during daytime hours.
+      Located on Kottayam - Kumily Rd, Kalathipady. The studio features expansive glass aesthetics with gorgeous natural light and a clinical, private atmosphere for premium body art sessions.
     </p>
   </div>
 );

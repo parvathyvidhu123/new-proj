@@ -494,7 +494,7 @@ export default function Hero() {
 
       <div className="absolute bottom-10 left-10 z-20 hidden lg:flex items-center gap-6 text-xs font-bold tracking-[0.3em] text-zinc-500 uppercase hero-fade-in">
         <a 
-          href="https://api.whatsapp.com/send?phone=916235456525" 
+          href="https://api.whatsapp.com/send?phone=919746695575" 
           target="_blank" 
           rel="noopener noreferrer"
           className="hover:text-gold-accent flex items-center gap-2 transition-colors duration-300"

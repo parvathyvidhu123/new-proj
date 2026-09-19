@@ -68,24 +68,30 @@ export default function RootLayout({
     "telephone": "+919746695575",
     "address": {
       "@type": "PostalAddress",
-      "streetAddress": "2nd Floor, Grand Opera Building, Near KSRTC Terminal",
+      "streetAddress": "Kottayam - Kumily Rd, Kalathipady",
       "addressLocality": "Kottayam",
       "addressRegion": "Kerala",
-      "postalCode": "686001",
+      "postalCode": "686010",
       "addressCountry": "IN"
     },
     "geo": {
       "@type": "GeoCoordinates",
-      "latitude": 9.5923984,
-      "longitude": 76.5204683
+      "latitude": 9.5884198,
+      "longitude": 76.5507241
     },
-    "url": "https://www.google.com/maps/place/BLACK+HOLE+TATTOOS+%26+PIERCING+KOTTAYAM/@9.5923984,76.5204683,17z",
+    "url": "https://maps.google.com/?cid=16301648057279318063",
     "openingHoursSpecification": [
       {
         "@type": "OpeningHoursSpecification",
-        "dayOfWeek": ["Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
-        "opens": "10:30",
-        "closes": "20:00"
+        "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+        "opens": "11:00",
+        "closes": "19:30"
+      },
+      {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": ["Sunday"],
+        "opens": "12:00",
+        "closes": "19:30"
       }
     ],
     "sameAs": [
