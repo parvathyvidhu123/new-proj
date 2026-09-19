@@ -107,6 +107,11 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
+                <Link href="/#services" scroll={false} onClick={(e: React.MouseEvent<HTMLAnchorElement>) => handleScrollTo(e, "/#services")} className="hover:text-gold-accent transition-colors duration-300">
+                  Microblading Brow Styling
+                </Link>
+              </li>
+              <li>
                 <Link href="/#booking" scroll={false} onClick={(e: React.MouseEvent<HTMLAnchorElement>) => handleScrollTo(e, "/#booking")} className="hover:text-gold-accent transition-colors duration-300">
                   Book Consultation
                 </Link>

@@ -27,7 +27,7 @@ export default function ArtistsPage() {
       experience: "10 Years",
       style: ["Japanese Irezumi", "Bold Traditional", "Heavy Blackwork"],
       bio: "Manu Narayan is the founder of Blackhole Tattoos. With a decade of dedicated skin illustration experience, he has pioneered contemporary blackwork and custom traditional body layouts in Kerala. His sessions blend deep aesthetic collaboration with clinical precision.",
-      avatar: "/assets/artist_manu.webp",
+      avatar: "/assets/artist_manu_clean.webp",
       instagram: "https://instagram.com/manu.narayan.ink",
       certifications: ["Red Cross Bloodborne Pathogens Standard", "First Aid & CPR Certified", "Preventative Cross-Contamination Certification"],
       portfolio: [
@@ -44,7 +44,7 @@ export default function ArtistsPage() {
       experience: "7 Years",
       style: ["All Styles", "Hyper-Realism", "Portrait Realism", "Dark Surrealism"],
       bio: "Jaison specializes in high-fidelity hyper-realism and sharp portraits. Capable of executing diverse styling parameters, his ability to render delicate lighting and soft shadows on the skin makes his works look completely lifelike.",
-      avatar: "/assets/artist_jaison.png",
+      avatar: "/assets/artist_jaison_clean.webp",
       instagram: "https://instagram.com/jaison.realism.art",
       certifications: ["Red Cross Bloodborne Pathogens Standard", "Sterilization Vault Protocols Expert"],
       portfolio: [
@@ -61,7 +61,7 @@ export default function ArtistsPage() {
       experience: "5 Years",
       style: ["Fine-Line", "Geometric Mandalas", "Dotwork / Stippling"],
       bio: "Amal channels natural botany and abstract illustration into custom fine-line designs. Known for his steady hand and geometric layouts, he delivers crisp, elegant, and minimally complex details.",
-      avatar: "/assets/artist_amal.png",
+      avatar: "/assets/artist_amal_clean.webp",
       instagram: "https://instagram.com/amal.fineline",
       certifications: ["Red Cross Bloodborne Pathogens Standard", "APP Safety Guidelines Compliant"],
       portfolio: [
@@ -78,7 +78,7 @@ export default function ArtistsPage() {
       experience: "6 Years",
       style: ["All Styles", "Black & Grey Realism", "Custom Designs"],
       bio: "Athul is a versatile guest artist at Blackhole. Proficient across all design categories, his fluid adaptability allows him to transition seamlessly between bold lines, delicate shading, and custom concepts.",
-      avatar: "/assets/artist_athul.webp",
+      avatar: "/assets/artist_athul_clean.webp",
       instagram: "https://instagram.com/athul.ink",
       certifications: [],
       portfolio: [],
@@ -91,7 +91,7 @@ export default function ArtistsPage() {
       experience: "5 Years",
       style: ["All Styles", "Bespoke Illustration", "Fine-Line & Dotwork"],
       bio: "Divya is an accomplished freelance artist who brings a versatile multi-disciplinary approach to Blackhole. Capable of executing all design styles, she excels at translating complex personal stories into clean illustrations.",
-      avatar: "/assets/artist_divya.webp",
+      avatar: "/assets/artist_divya_clean.webp",
       instagram: "https://instagram.com/divya.art",
       certifications: [],
       portfolio: [],
@@ -104,7 +104,7 @@ export default function ArtistsPage() {
       experience: "7 Years",
       style: ["All Styles", "Neo-Traditional", "Heavy Contrast Blackwork"],
       bio: "Akhil is a highly skilled freelance artist who joins the Blackhole collective for custom sessions. Proficient across all styling methodologies, his work is characterized by high contrast and absolute versatility.",
-      avatar: "/assets/artist_akhil.webp",
+      avatar: "/assets/artist_akhil_clean.webp",
       instagram: "https://instagram.com/akhil.ink",
       certifications: [],
       portfolio: [],
@@ -139,14 +139,15 @@ export default function ArtistsPage() {
             key={artist.id}
             className="glass-premium rounded-2xl overflow-hidden flex flex-col group border border-white/5 hover:border-gold-accent/30 transition-all duration-500"
           >
-            {/* Avatar image container */}
-            <div className="relative aspect-[4/3] w-full bg-zinc-950 overflow-hidden">
+            {/* Avatar image container - standardized 4:5 portrait ratio */}
+            <div className="relative aspect-[4/5] w-full bg-zinc-950 overflow-hidden">
               <Image
                 src={artist.avatar}
                 alt={artist.name}
                 fill
+                quality={92}
                 sizes="(max-width: 768px) 100vw, 33vw"
-                className="object-cover transition-transform duration-700 ease-out group-hover:scale-105 brightness-[0.85] group-hover:brightness-100"
+                className="object-cover transition-transform duration-700 ease-out group-hover:scale-105 brightness-[0.88] group-hover:brightness-100"
                 style={{ objectPosition: artist.objectPosition || "center" }}
               />
               <div className="absolute inset-0 bg-gradient-to-t from-zinc-950 via-zinc-950/20 to-transparent opacity-80" />
