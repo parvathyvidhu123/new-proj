@@ -28,7 +28,7 @@ export default function Footer() {
   };
 
   return (
-    <footer className="relative w-full bg-black text-zinc-400 pt-24 pb-12 overflow-hidden border-t border-zinc-900/50 select-none">
+    <footer className="relative w-full bg-black text-zinc-400 pt-16 pb-10 overflow-hidden border-t border-zinc-900/50 select-none">
       
       {/* Soft bottom glow lighting */}
       <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-full max-w-7xl h-[120px] bg-red-950/15 rounded-full blur-3xl pointer-events-none" />
@@ -36,7 +36,7 @@ export default function Footer() {
       <div className="max-w-7xl mx-auto px-6 md:px-12 relative z-10">
         
         {/* Top Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-12 lg:gap-8 pb-16 border-b border-zinc-900">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-12 lg:gap-8 pb-12 border-b border-zinc-900">
           
           {/* Col 1: Brand & Newsletter (4 Columns) */}
           <div className="lg:col-span-4 space-y-6">
@@ -165,14 +165,14 @@ export default function Footer() {
         </div>
 
         {/* Grand Typography Logo (Locomotive-style Signature) */}
-        <div className="py-12 select-none pointer-events-none text-center">
+        <div className="py-8 select-none pointer-events-none text-center">
           <h2 className="font-display text-[8vw] font-black tracking-[-0.04em] leading-none text-zinc-900/40 select-none uppercase">
             BLACKHOLE
           </h2>
         </div>
 
         {/* Bottom copyright metadata */}
-        <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-8 border-t border-zinc-900/50 text-[10px] tracking-widest text-zinc-600 uppercase font-bold">
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-6 border-t border-zinc-900/50 text-[10px] tracking-widest text-zinc-600 uppercase font-bold">
           <div>
             © {new Date().getFullYear()} BLACKHOLE TATTOOS. ALL RIGHTS RESERVED.
           </div>

@@ -64,7 +64,7 @@ export default function Testimonials() {
   return (
     <section
       id="testimonials"
-      className="relative w-full py-24 md:py-36 bg-warm-white dark:bg-black text-zinc-900 dark:text-zinc-100 overflow-hidden border-t border-zinc-200 dark:border-zinc-900 transition-colors duration-500"
+      className="relative w-full py-16 md:py-24 bg-warm-white dark:bg-black text-zinc-900 dark:text-zinc-100 overflow-hidden border-t border-zinc-200 dark:border-zinc-900 transition-colors duration-500"
     >
       {/* Background glow */}
       <div className="absolute top-1/2 left-1/4 -translate-y-1/2 w-[600px] h-[600px] bg-red-950/5 rounded-full blur-3xl pointer-events-none" />
@@ -72,7 +72,7 @@ export default function Testimonials() {
       <div className="max-w-5xl mx-auto px-6 md:px-12 relative z-10">
         
         {/* Header */}
-        <div className="text-center mb-16 md:mb-24">
+        <div className="text-center mb-12 md:mb-16">
           
           <h2 className="font-display text-4xl md:text-5xl font-black uppercase tracking-tight">
             TESTIMONIALS OF <br />

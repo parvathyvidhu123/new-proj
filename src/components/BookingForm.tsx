@@ -174,7 +174,7 @@ export default function BookingForm() {
   return (
     <section
       id="booking"
-      className="relative w-full py-24 md:py-36 bg-warm-white dark:bg-black text-zinc-900 dark:text-zinc-100 overflow-hidden border-t border-zinc-200 dark:border-zinc-900 transition-colors duration-500"
+      className="relative w-full py-16 md:py-24 bg-warm-white dark:bg-black text-zinc-900 dark:text-zinc-100 overflow-hidden border-t border-zinc-200 dark:border-zinc-900 transition-colors duration-500"
     >
       {/* Background blur effects */}
       <div className="absolute top-1/3 right-1/4 -translate-y-1/2 w-[500px] h-[500px] bg-red-950/10 rounded-full blur-3xl pointer-events-none" />
@@ -182,7 +182,7 @@ export default function BookingForm() {
       <div className="max-w-4xl mx-auto px-6 md:px-12 relative z-10">
         
         {/* Header */}
-        <div className="text-center mb-16">
+        <div className="text-center mb-12">
 
           <h2 className="font-display text-4xl md:text-5xl font-black uppercase tracking-tight">
             SECURE YOUR <br />

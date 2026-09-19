@@ -231,12 +231,12 @@ export default function Gallery() {
   return (
     <section
       id="gallery"
-      className="relative w-full py-24 md:py-36 bg-matte-black text-zinc-100 border-t border-zinc-900"
+      className="relative w-full py-16 md:py-24 bg-matte-black text-zinc-100 border-t border-zinc-900"
     >
       <div className="max-w-7xl mx-auto px-6 md:px-12">
 
         {/* Section Title */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-16">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
           <div>
             <h2 className="font-display text-4xl md:text-6xl font-black uppercase tracking-tight leading-none">
               THE PORTFOLIO <br />

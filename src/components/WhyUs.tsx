@@ -64,7 +64,7 @@ export default function WhyUs() {
     <section
       id="why-us"
       ref={sectionRef}
-      className="relative w-full py-24 md:py-36 bg-soft-bone dark:bg-black text-zinc-900 dark:text-zinc-100 overflow-hidden border-t border-zinc-200 dark:border-zinc-900 transition-colors duration-500"
+      className="relative w-full py-16 md:py-24 bg-soft-bone dark:bg-black text-zinc-900 dark:text-zinc-100 overflow-hidden border-t border-zinc-200 dark:border-zinc-900 transition-colors duration-500"
     >
       {/* Dynamic glow overlays */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] bg-red-950/5 rounded-full blur-3xl pointer-events-none" />
@@ -72,7 +72,7 @@ export default function WhyUs() {
       <div className="max-w-7xl mx-auto px-6 md:px-12 relative z-10">
         
         {/* Header */}
-        <div className="max-w-3xl mb-20">
+        <div className="max-w-3xl mb-12 md:mb-16">
           
           <h2 className="font-display text-4xl md:text-6xl font-black uppercase tracking-tight leading-tight">
             WHY CLIENTS TRUST <br />

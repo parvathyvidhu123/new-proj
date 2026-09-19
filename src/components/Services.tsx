@@ -98,7 +98,7 @@ export default function Services() {
     <section
       id="services-details"
       ref={containerRef}
-      className="relative w-full py-24 md:py-36 bg-warm-white dark:bg-black text-zinc-900 dark:text-zinc-100 overflow-hidden border-t border-zinc-200 dark:border-zinc-900 transition-colors duration-500"
+      className="relative w-full py-16 md:py-24 bg-warm-white dark:bg-black text-zinc-900 dark:text-zinc-100 overflow-hidden border-t border-zinc-200 dark:border-zinc-900 transition-colors duration-500"
     >
       {/* Background glow overlay */}
       <div className="absolute top-1/4 left-1/4 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-red-900/10 rounded-full blur-3xl pointer-events-none" />
@@ -107,7 +107,7 @@ export default function Services() {
       <div className="max-w-7xl mx-auto px-6 md:px-12 relative z-10">
         
         {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-20 md:mb-28">
+        <div className="text-center max-w-3xl mx-auto mb-12 md:mb-16">
           
           <h2 className="font-display text-4xl md:text-6xl font-black uppercase tracking-tight text-zinc-900 dark:text-zinc-100 leading-tight">
             OUR SPECIALIZED <br />

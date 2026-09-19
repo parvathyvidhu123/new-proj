@@ -113,13 +113,13 @@ export default function ArtistsPage() {
   ];
 
   return (
-    <div className="w-full min-h-screen bg-matte-black text-zinc-100 flex flex-col pt-32 pb-20 relative overflow-hidden">
+    <div className="w-full min-h-screen bg-matte-black text-zinc-100 flex flex-col pt-28 pb-16 relative overflow-hidden">
       {/* Decorative background elements */}
       <div className="absolute top-0 left-0 w-[500px] h-[500px] bg-red-950/10 rounded-full blur-[120px] pointer-events-none -z-10" />
       <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-red-950/10 rounded-full blur-[150px] pointer-events-none -z-10" />
 
       {/* Page Title & Intro */}
-      <div className="max-w-7xl mx-auto px-6 md:px-12 w-full mb-16">
+      <div className="max-w-7xl mx-auto px-6 md:px-12 w-full mb-12">
         <span className="text-xs font-bold tracking-[0.3em] text-gold-accent uppercase mb-3 block">
           Creative Collective
         </span>

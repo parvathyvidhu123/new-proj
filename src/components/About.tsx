@@ -62,9 +62,9 @@ export default function About() {
     <section
       id="services" // Use services ID so smooth scroll routes correctly
       ref={sectionRef}
-      className="relative w-full py-24 md:py-36 bg-soft-bone dark:bg-black text-zinc-900 dark:text-zinc-100 overflow-hidden transition-colors duration-500"
+      className="relative w-full py-16 md:py-24 bg-soft-bone dark:bg-black text-zinc-900 dark:text-zinc-100 overflow-hidden transition-colors duration-500"
     >
-      <div className="max-w-7xl mx-auto px-6 md:px-12 grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-center">
+      <div className="max-w-7xl mx-auto px-6 md:px-12 grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
         
         {/* LEFT Side: Immersive Image with editorial framing */}
         <div 
@@ -77,7 +77,7 @@ export default function About() {
           {/* Film Grain overlay specific to this image */}
           <div className="absolute inset-0 bg-black/10 z-10 pointer-events-none group-hover:bg-transparent transition-colors duration-500" />
           
-          <div className="relative aspect-[4/5] w-full h-[520px] md:h-[640px] overflow-hidden">
+          <div className="relative aspect-[4/5] w-full h-[460px] md:h-[560px] overflow-hidden">
             <Image
               src="/assets/digital_artistry_consultation_hd.jpg"
               alt="Digital Artistry & Consultation at BLACKHOLE"
@@ -103,12 +103,12 @@ export default function About() {
         >
           
 
-          <h2 className="font-display text-4xl md:text-5xl font-black tracking-tight uppercase text-zinc-900 dark:text-zinc-100 mb-8 leading-tight">
+          <h2 className="font-display text-4xl md:text-5xl font-black tracking-tight uppercase text-zinc-900 dark:text-zinc-100 mb-6 leading-tight">
             CRAFTING IMMORTAL <br />
             <span className="font-serif italic font-light text-gold-accent tracking-wide">DIGITAL ARTISTRY</span> ON SKIN
           </h2>
 
-          <div className="font-sans text-sm md:text-base text-zinc-650 dark:text-zinc-400 font-light space-y-6 leading-relaxed">
+          <div className="font-sans text-sm md:text-base text-zinc-650 dark:text-zinc-400 font-light space-y-4 leading-relaxed">
             <p>
               Located in the heart of Kottayam, Kerala, <strong className="font-bold">BLACKHOLE</strong> is not just a tattoo studio. It is a premium contemporary art space where personal narratives undergo a transition into custom-crafted, bespoke body illustration.
             </p>
@@ -121,7 +121,7 @@ export default function About() {
           </div>
 
           {/* Animated Statistics Block */}
-          <div className="grid grid-cols-2 gap-8 mt-12 pt-12 border-t border-zinc-200 dark:border-zinc-800">
+          <div className="grid grid-cols-2 gap-8 mt-8 pt-8 border-t border-zinc-200 dark:border-zinc-800">
             
             {/* Stat 1 */}
             <div className="flex flex-col">

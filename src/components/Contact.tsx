@@ -102,12 +102,12 @@ export default function Contact() {
   return (
     <section
       id="contact"
-      className="relative w-full py-24 md:py-36 bg-soft-bone dark:bg-black text-zinc-900 dark:text-zinc-100 overflow-hidden border-t border-zinc-200 dark:border-zinc-900 transition-colors duration-500"
+      className="relative w-full py-16 md:py-24 bg-soft-bone dark:bg-black text-zinc-900 dark:text-zinc-100 overflow-hidden border-t border-zinc-200 dark:border-zinc-900 transition-colors duration-500"
     >
       <div className="max-w-7xl mx-auto px-6 md:px-12 relative z-10">
         
         {/* Header */}
-        <div className="max-w-3xl mb-20">
+        <div className="max-w-3xl mb-12 md:mb-16">
           
           <h2 className="font-display text-4xl md:text-6xl font-black uppercase tracking-tight leading-tight">
             ESTABLISH <br />
@@ -119,7 +119,7 @@ export default function Contact() {
         </div>
 
         {/* Main Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 xl:gap-24">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 xl:gap-16">
           
           {/* LEFT: Contact details, business profile & custom styled map (7 Cols) */}
           <div className="lg:col-span-7 space-y-10">
