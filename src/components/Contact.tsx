@@ -35,6 +35,8 @@ export default function Contact() {
         ? "Precision Piercing" 
         : data.service === "microblading"
         ? "Microblading Brow Styling"
+        : data.service === "academy"
+        ? "Tattoo Training Academy / Course"
         : "General Consultation / Enquiry";
 
       // 1. Submit to local SQLite database via API
@@ -291,6 +293,7 @@ export default function Contact() {
                         <option value="tattoo">Custom Tattooing</option>
                         <option value="piercing">Precision Piercing</option>
                         <option value="microblading">Microblading Brow Styling</option>
+                        <option value="academy">Tattoo Training Academy / Course</option>
                         <option value="general">General Consultation / Enquiry</option>
                       </select>
                       <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-zinc-400 dark:text-zinc-650">
